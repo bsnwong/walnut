@@ -11,10 +11,12 @@
 |
 */
 
+/*
+ * Will show the home page if is login, otherwise the login page
+ * */
 Route::get('/', function()
 {
-    
-	return View::make('hello');
+	return View::make('login');
 });
 
 Route::get('about', function() {
@@ -28,3 +30,4 @@ Route::get('about', function() {
     $new->save();
     return $view;
 });
+Route::post('login', 'LoginController@judgeUser');
