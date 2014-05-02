@@ -4,3 +4,7 @@
     hello
 @stop
 
+@if($user)
+    <p>{{ $user}}</p>
+@endif
+

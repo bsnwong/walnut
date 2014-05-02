@@ -54,7 +54,7 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'walnut.dev',
+			'host'      => 'localhost',
 			'database'  => 'walnut',
 			'username'  => 'root',
 			'password'  => 'root',

@@ -13,13 +13,18 @@
 
 Route::get('/', function()
 {
+    
 	return View::make('hello');
 });
 
 Route::get('about', function() {
+    $users = User::all()->count();
     $view = View::make('home.about');
     $view->greeting = 'hi';
     $view->who = 'everyone';
+    $view->user = $users;
+    $new = new User;
+    $new->name = 'hello';
+    $new->save();
     return $view;
-
 });
