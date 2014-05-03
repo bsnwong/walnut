@@ -382,7 +382,7 @@
 
 ***
 ###6.人数统计表Static
->#####1)说明：存储引擎为InnoDB
+>#####1)说明：存储引擎为MEMORY，定期转储
 >#####2)表设计
 <table>
     <tr>
@@ -411,20 +411,6 @@
         <td></td>
         <td>int</td>
         <td>人数(UNSIGNED)</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>created_at</td>
-        <td></td>
-        <td>date</td>
-        <td>创建时间</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>updated_at</td>
-        <td></td>
-        <td>date</td>
-        <td>更新时间</td>
         <td></td>
     </tr>
 </table>
