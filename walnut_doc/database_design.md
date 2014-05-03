@@ -1,8 +1,8 @@
 ##数据库说明
 ***
 ###1.用户表User
-#####   1)说明：存储引擎为InnoDB
-#####   2)表设计
+>#####1)说明：存储引擎为InnoDB
+>#####2)表设计
 <table>
     <tr>
         <td>字段名</td>
@@ -13,7 +13,7 @@
     </tr>
     <tr>
         <td>id</td>
-        <td>40</td>
+        <td></td>
         <td>bigint</td>
         <td>自增长</td>
         <td></td>
@@ -55,24 +55,24 @@
     </tr>
     <tr>
         <td>college</td>
-        <td>50</td>
+        <td>10</td>
         <td>varchar</td>
         <td>学院</td>
-        <td></td>
+        <td>代号表示</td>
     </tr>
     <tr>
         <td>school</td>
-        <td>50</td>
+        <td>10</td>
         <td>varchar</td>
         <td>学校</td>
-        <td></td>
+        <td>代号表示</td>
     </tr>
     <tr>
         <td>major</td>
-        <td>100</td>
+        <td>10</td>
         <td>varchar</td>
         <td>专业</td>
-        <td></td>
+        <td>代号表示</td>
     </tr>
     <tr>
         <td>created_at</td>
@@ -95,3 +95,137 @@
         <td>男(type:1)女(type:2)其他(type:0)</td>
     </tr>
 </table>
+***
+###2.学校信息表School_info
+>#####1)说明：存储引擎为InnoDB
+>#####2)表设计
+<table>
+    <tr>
+        <td>字段名</td>
+        <td>字段长度</td>
+        <td>字段类型</td>
+        <td>字段说明</td>
+        <td>备注</td>
+    </tr>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td>bigint</td>
+        <td>自增长</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>code</td>
+        <td>10</td>
+        <td>int</td>
+        <td>代号</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>50</td>
+        <td>varchar</td>
+        <td>名称</td>
+        <td>包括学校/学院/专业</td>
+    </tr>
+    <tr>
+        <td>parent_node</td>
+        <td></td>
+        <td>bigint</td>
+        <td>父节点</td>
+        <td>当值为0时，表示顶端节点，该值对应id中的值</td>
+    </tr> 
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>   
+</table>
+
+
+
+***
+<table>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr> 
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>   
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
