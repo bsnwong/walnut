@@ -66,21 +66,21 @@
         <td>10</td>
         <td>varchar</td>
         <td>学院</td>
-        <td>代号表示</td>
+        <td>外键(Schoole_info:code)，代号表示</td>
     </tr>
     <tr>
         <td>school</td>
         <td>10</td>
         <td>varchar</td>
         <td>学校</td>
-        <td>代号表示</td>
+        <td>外键(Schoole_info:code)，代号表示</td>
     </tr>
     <tr>
         <td>major</td>
         <td>10</td>
         <td>varchar</td>
         <td>专业</td>
-        <td>代号表示</td>
+        <td>外键(Schoole_info:code)，代号表示</td>
     </tr>
     <tr>
         <td>created_at</td>
@@ -97,7 +97,7 @@
     </tr>
 </table>
 ***
-###2.学校信息表School_info
+###2.组织信息表Organization
 >#####1)说明：存储引擎为InnoDB
 >#####2)表设计
 
@@ -118,8 +118,8 @@
     </tr>
     <tr>
         <td>code</td>
-        <td>10</td>
-        <td>int</td>
+        <td></td>
+        <td>int(UNSIGNED)</td>
         <td>代号</td>
         <td></td>
     </tr>
@@ -176,56 +176,152 @@
 
 
 ***
+###3.试题信息表Question
+>#####1)说明：存储引擎为InnoDB
+>#####2)表设计
 <table>
     <tr>
+        <td>字段名</td>
+        <td>字段长度</td>
+        <td>字段类型</td>
+        <td>字段说明</td>
+        <td>备注</td>
+    </tr>
+    <tr>
+        <td>id</td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>bigint</td>
+        <td>自增长</td>
         <td></td>
     </tr>
     <tr>
+        <td>course_code</td>
         <td></td>
+        <td>enum</td>
+        <td>科目类型</td>
+        <td>外键(Course:code)</td>
+    </tr>
+    <tr>
+        <td>code</td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>bigint(UNSIGNED)</td>
+        <td>试题代号</td>
         <td></td>
     </tr>
     <tr>
+        <td>question</td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>text</td>
+        <td>试题</td>
         <td></td>
     </tr> 
     <tr>
+        <td>type</td>
         <td></td>
+        <td>enum</td>
+        <td>试题类型，选择题：1，填空题：2，判断题：3，简答题：4，计算题：5，综合题：6，其他：0</td>
+        <td>当试题类型为选择题时，对应的答案为answer2，判断题对应的答案为answer3，其余对应的答案为answer</td>
+    </tr>
+    <tr>
+        <td>answer</td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>text</td>
+        <td>答案</td>
         <td></td>
     </tr>
     <tr>
+        <td>answer2</td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>enum(A,B,C,D,E,F,G,H...X,Y,Z)</td>
+        <td>选择题答案</td>
         <td></td>
     </tr>
     <tr>
+        <td>answer3</td>
         <td></td>
+        <td>enum(0,1,2)</td>
+        <td>判断题答案(0：为无法判断，1：正确，2：错误)</td>
         <td></td>
+    </tr>
+    <tr>
+        <td>analysis</td>
         <td></td>
-        <td></td>
+        <td>text</td>
+        <td>答案分析</td>
         <td></td>
     </tr>   
+    <tr>
+        <td>author</td>
+        <td></td>
+        <td>bigint</td>
+        <td>作者</td>
+        <td>外键(User:id)</td>
+    </tr>
+    <tr>
+        <td>level</td>
+        <td></td>
+        <td>enum</td>
+        <td>难度(0,1,2,3,4,5,6,7,8,9,10)</td>
+        <td>0代表10级以上</td>
+    </tr>
+    <tr>
+        <td>correct</td>
+        <td></td>
+        <td>bigint</td>
+        <td>正确数(UNSIGNED)</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>incorrect</td>
+        <td></td>
+        <td>bigint(UNSIGNED)</td>
+        <td>错误数</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>time_limit</td>
+        <td></td>
+        <td>tinyint(UNSIGNED)</td>
+        <td>时间限制</td>
+        <td>单位为分钟，默认为0，即无时间限制</td>
+    </tr>
+
+    <tr>
+        <td>created_at</td>
+        <td></td>
+        <td>date</td>
+        <td>创建时间</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>created_at</td>
+        <td></td>
+        <td>date</td>
+        <td>创建时间</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>created_at</td>
+        <td></td>
+        <td>date</td>
+        <td>创建时间</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>created_at</td>
+        <td></td>
+        <td>date</td>
+        <td>创建时间</td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>updated_at</td>
+        <td></td>
+        <td>date</td>
+        <td>更新时间</td>
+        <td></td>
+    </tr>    
 </table>
 
 
