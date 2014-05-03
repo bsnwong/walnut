@@ -280,6 +280,141 @@
     </tr>    
 </table>
 
+***
+###4.测试情况表Result
+>#####1)说明：存储引擎为InnoDB
+>#####2)表设计
+
+<table>
+    <tr>
+        <td>字段名</td>
+        <td>字段长度</td>
+        <td>字段类型</td>
+        <td>字段说明</td>
+        <td>备注</td>
+    </tr>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td>bigint</td>
+        <td>自增长</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>q_id</td>
+        <td></td>
+        <td>bigint(UNSIGNED)</td>
+        <td>试题id</td>
+        <td>外键(Question:id)</td>
+    </tr>
+    <tr>
+        <td>u_id</td>
+        <td></td>
+        <td>bigint(UNSIGNED)</td>
+        <td>测试者id</td>
+        <td>外键(User:id)</td>
+    </tr>
+    <tr>
+        <td>created_at</td>
+        <td></td>
+        <td>date</td>
+        <td>创建时间</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>updated_at</td>
+        <td></td>
+        <td>date</td>
+        <td>更新时间</td>
+        <td></td>
+    </tr>
+</table>
+
+***
+###5.评论表Comment
+>#####1)说明：存储引擎为InnoDB
+>#####2)表设计
+
+<table>
+    <tr>
+        <td>字段名</td>
+        <td>字段长度</td>
+        <td>字段类型</td>
+        <td>字段说明</td>
+        <td>备注</td>
+    </tr>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td>bigint</td>
+        <td>自增长</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>hour</td>
+        <td></td>
+        <td>enum</td>
+        <td>时段</td>
+        <td>范围(0,1,2,3,4...21,22,23)</td>
+    </tr>
+    <tr>
+        <td>num</td>
+        <td></td>
+        <td>int</td>
+        <td>人数</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>created_at</td>
+        <td></td>
+        <td>date</td>
+        <td>创建时间</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>updated_at</td>
+        <td></td>
+        <td>date</td>
+        <td>更新时间</td>
+        <td></td>
+    </tr>
+</table>
+
+***
+###6.当前在线人数
+>#####
+>#####
+
+<table>
+    <tr>
+        <td>字段名</td>
+        <td>字段长度</td>
+        <td>字段类型</td>
+        <td>字段说明</td>
+        <td>备注</td>
+    </tr>
+    <tr>
+        <td>num</td>
+        <td></td>
+        <td>int(UNSIGNED)</td>
+        <td>当前在线人数</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>created_at</td>
+        <td></td>
+        <td>date</td>
+        <td>创建时间</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>updated_at</td>
+        <td></td>
+        <td>date</td>
+        <td>更新时间</td>
+        <td></td>
+    </tr>
+</table>
 
 
 
