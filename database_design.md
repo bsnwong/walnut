@@ -1,6 +1,6 @@
 ##数据库说明
 
-###用户表User
+###1.用户表User
 <table>
     <tr>
         <td>字段名</td>
@@ -43,48 +43,54 @@
         <td>enum</td>
         <td>用户类型</td>
         <td>具有管理员权限的用户(type:0)/普通用户(type:1)</td>
-    </tr><tr>
+    </tr>
+    <tr>
         <td>school_num</td>
+        <td>15</td>
+        <td>char</td>
+        <td>学号</td>
         <td></td>
+    </tr>
+    <tr>
+        <td>college</td>
+        <td>50</td>
+        <td>varchar</td>
+        <td>学院</td>
         <td></td>
+    </tr>
+    <tr>
+        <td>school</td>
+        <td>50</td>
+        <td>varchar</td>
+        <td>学校</td>
         <td></td>
+    </tr>
+    <tr>
+        <td>major</td>
+        <td>100</td>
+        <td>varchar</td>
+        <td>专业</td>
         <td></td>
-    </tr><tr>
+    </tr>
+    <tr>
+        <td>created_at</td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr><tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr><tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr><tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr><tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>date</td>
+        <td>创建时间</td>
         <td></td>
     </tr><tr>
+        <td>updated_at</td>
         <td></td>
+        <td>date</td>
+        <td>更新时间</td>
         <td></td>
+    </tr>
+    <tr>
+        <td>sex</td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>enum</td>
+        <td>性别(男/女/其他)</td>
+        <td>男(type:1)女(type:2)其他(type:0)</td>
     </tr><tr>
         <td></td>
         <td></td>
