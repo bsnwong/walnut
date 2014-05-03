@@ -149,28 +149,6 @@
         <td>更新时间</td>
         <td></td>
     </tr>
-    </tr> 
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>   
 </table>
 
 
@@ -307,14 +285,6 @@
         <td>创建时间</td>
         <td></td>
     </tr>
-    <tr>
-        <td>created_at</td>
-        <td></td>
-        <td>date</td>
-        <td>创建时间</td>
-        <td></td>
-    </tr>
-
     <tr>
         <td>updated_at</td>
         <td></td>
