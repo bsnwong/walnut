@@ -351,6 +351,55 @@
         <td></td>
     </tr>
     <tr>
+        <td>q_id</td>
+        <td></td>
+        <td>bigint</td>
+        <td>试题id</td>
+        <td>外键(Question:id)</td>
+    </tr>
+    <tr>
+        <td>content</td>
+        <td></td>
+        <td>text</td>
+        <td>评论内容</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>created_at</td>
+        <td></td>
+        <td>date</td>
+        <td>创建时间</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>updated_at</td>
+        <td></td>
+        <td>date</td>
+        <td>更新时间</td>
+        <td></td>
+    </tr>
+</table>
+
+***
+###6.人数统计表Static
+>#####1)说明：存储引擎为InnoDB
+>#####2)表设计
+<table>
+    <tr>
+        <td>字段名</td>
+        <td>字段长度</td>
+        <td>字段类型</td>
+        <td>字段说明</td>
+        <td>备注</td>
+    </tr>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td>bigint</td>
+        <td>自增长</td>
+        <td></td>
+    </tr>
+    <tr>
         <td>hour</td>
         <td></td>
         <td>enum</td>
@@ -381,7 +430,7 @@
 </table>
 
 ***
-###6.当前在线人数
+###7.当前在线人数
 >#####1)说明：存储引擎为MEMORY
 >#####2)表设计
 
