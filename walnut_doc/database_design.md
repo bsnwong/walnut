@@ -134,7 +134,7 @@
         <td>parent_node</td>
         <td></td>
         <td>bigint</td>
-        <td>父节点</td>
+        <td>父节点(索引)</td>
         <td>当值为0时，表示顶端节点，该值对应id中的值</td>
     <tr>
         <td>created_at</td>
