@@ -263,14 +263,6 @@
         <td>时间限制</td>
         <td>单位为分钟，默认为0，即无时间限制</td>
     </tr>
-
-    <tr>
-        <td>created_at</td>
-        <td></td>
-        <td>date</td>
-        <td>创建时间</td>
-        <td></td>
-    </tr>
     <tr>
         <td>created_at</td>
         <td></td>
