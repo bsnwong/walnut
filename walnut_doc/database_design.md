@@ -289,7 +289,7 @@
 
 ***
 ###4.科目表Course
->#####1)说明：存储引擎为MyISAM
+>#####1)说明：存储引擎为InnoDB
 >#####2)表设计
 
 <table>
@@ -312,7 +312,7 @@
         <td>50</td>
         <td>varchar</td>
         <td>创建者</td>
-        <td>外键(User:id)</td>
+        <td>外键(User:email)</td>
     </tr>
     <tr>
         <td>code</td>
