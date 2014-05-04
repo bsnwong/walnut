@@ -281,6 +281,55 @@
 </table>
 
 ***
+###4.科目表Course
+>#####1)说明：存储引擎为MyISAM
+>#####2)表设计
+
+<table>
+    <tr>
+        <td>字段名</td>
+        <td>字段长度</td>
+        <td>字段类型</td>
+        <td>字段说明</td>
+        <td>备注</td>
+    </tr>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td>int</td>
+        <td>科目</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>creator</td>
+        <td>50</td>
+        <td>varchar</td>
+        <td>创建者</td>
+        <td>外键(User:id)</td>
+    </tr>
+    <tr>
+        <td>code</td>
+        <td>5</td>
+        <td>char</td>
+        <td>科目代号</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>created_at</td>
+        <td></td>
+        <td>date</td>
+        <td>创建时间</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>updated_at</td>
+        <td></td>
+        <td>date</td>
+        <td>更新时间</td>
+        <td></td>
+    </tr>
+</table>
+***
 ###4.测试情况表Result
 >#####1)说明：存储引擎为InnoDB
 >#####2)表设计
