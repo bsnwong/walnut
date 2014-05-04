@@ -1,7 +1,7 @@
 ##数据库说明
 ***
 ###1.用户表User
->#####1)说明：存储引擎为MyISAM
+>#####1)说明：存储引擎InnoDB
 >#####2)表设计
 
 <table>
@@ -53,7 +53,7 @@
         <td>enum</td>
         <td>性别(男/女/其他)</td>
         <td>男(type:1)女(type:2)其他(type:0)</td>
-    </tr>    
+    </tr>
     <tr>
         <td>school_num</td>
         <td>15</td>
@@ -155,7 +155,7 @@
 
 ***
 ###3.试题信息表Question
->#####1)说明：存储引擎为MyISAM
+>#####1)说明：存储引擎为InnoDB
 >#####2)表设计
 
 <table>
@@ -172,6 +172,13 @@
         <td>bigint</td>
         <td>自增长</td>
         <td></td>
+    </tr>
+    <tr>
+        <td>code</td>
+        <td>32</td>
+        <td>char</td>
+        <td>试题编号</td>
+        <td>唯一</td>
     </tr>
     <tr>
         <td>course_code</td>
@@ -193,7 +200,7 @@
         <td>text</td>
         <td>试题</td>
         <td></td>
-    </tr> 
+    </tr>
     <tr>
         <td>type</td>
         <td></td>
@@ -228,7 +235,7 @@
         <td>text</td>
         <td>答案分析</td>
         <td></td>
-    </tr>   
+    </tr>
     <tr>
         <td>author</td>
         <td></td>
@@ -277,7 +284,7 @@
         <td>date</td>
         <td>更新时间</td>
         <td></td>
-    </tr>    
+    </tr>
 </table>
 
 ***
@@ -465,7 +472,7 @@
 </table>
 
 ***
-###8.当前在线人数
+###8.当前在线人数Current_num
 >#####1)说明：存储引擎为MEMORY
 >#####2)表设计
 
