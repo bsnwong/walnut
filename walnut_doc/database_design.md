@@ -66,21 +66,21 @@
         <td>10</td>
         <td>varchar</td>
         <td>学院</td>
-        <td>外键(Schoole_info:code)，代号表示</td>
+        <td>外键(Organization:id)，代号表示</td>
     </tr>
     <tr>
         <td>school</td>
         <td>10</td>
         <td>varchar</td>
         <td>学校</td>
-        <td>外键(Schoole_info:code)，代号表示</td>
+        <td>外键(Organization:id)，代号表示</td>
     </tr>
     <tr>
         <td>major</td>
         <td>10</td>
         <td>varchar</td>
         <td>专业</td>
-        <td>外键(Schoole_info:code)，代号表示</td>
+        <td>外键(Organization:id)，代号表示</td>
     </tr>
     <tr>
         <td>created_at</td>
@@ -121,7 +121,7 @@
         <td></td>
         <td>int(UNSIGNED)</td>
         <td>代号</td>
-        <td></td>
+        <td>唯一</td>
     </tr>
     <tr>
         <td>name</td>
@@ -239,9 +239,9 @@
     <tr>
         <td>author</td>
         <td></td>
-        <td>bigint</td>
+        <td>varchar</td>
         <td>作者</td>
-        <td>外键(User:id)</td>
+        <td>外键(User:email)</td>
     </tr>
     <tr>
         <td>level</td>
@@ -357,18 +357,18 @@
         <td></td>
     </tr>
     <tr>
-        <td>q_id</td>
+        <td>question_code</td>
         <td></td>
-        <td>bigint(UNSIGNED)</td>
-        <td>试题id</td>
-        <td>外键(Question:id)</td>
+        <td>char</td>
+        <td>试题编号</td>
+        <td>外键(Question:code)</td>
     </tr>
     <tr>
-        <td>u_id</td>
+        <td>u_email</td>
         <td></td>
-        <td>bigint(UNSIGNED)</td>
-        <td>测试者id</td>
-        <td>外键(User:id)</td>
+        <td>varchar</td>
+        <td>测试者email</td>
+        <td>外键(User:email)</td>
     </tr>
     <tr>
         <td>created_at</td>
@@ -407,11 +407,11 @@
         <td></td>
     </tr>
     <tr>
-        <td>q_id</td>
+        <td>question_code</td>
         <td></td>
-        <td>bigint</td>
-        <td>试题id</td>
-        <td>外键(Question:id)</td>
+        <td>char</td>
+        <td>试题编号</td>
+        <td>外键(Question:code)</td>
     </tr>
     <tr>
         <td>content</td>
