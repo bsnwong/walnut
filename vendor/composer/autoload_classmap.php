@@ -7,7 +7,10 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
+    'CreateCourseTable' => $baseDir . '/app/database/migrations/2014_05_04_012702_create_course_table.php',
     'CreateOrganizationTable' => $baseDir . '/app/database/migrations/2014_05_03_095447_create_organization_table.php',
+    'CreateQuestionTable' => $baseDir . '/app/database/migrations/2014_05_04_010228_create_question_table.php',
+    'CreateTestTabl' => $baseDir . '/app/database/migrations/2014_05_03_142924_create_test_table.php',
     'CreateTestTable' => $baseDir . '/app/database/migrations/2014_05_03_021256_create_test_table.php',
     'CreateUserTable' => $baseDir . '/app/database/migrations/2014_05_03_123642_create_user_table.php',
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',

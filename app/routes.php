@@ -20,6 +20,8 @@ Route::get('/', function()
 });
 
 Route::get('about', function() {
+    phpinfo();
+    exit;
     $users = User::all()->count();
     $view = View::make('home.about');
     $view->greeting = 'hi';
