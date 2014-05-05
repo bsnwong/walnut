@@ -7,6 +7,13 @@
  */
 class LoginController extends BaseController {
     public function judgeUser() {
+        //get the info from login form
+        $email = Input::get('email');
+        $password = Input::get('password');
+
+        $result = DB::table('User')->where('email', '=', $email)->get();
+
+
         return "hello";
     }
 }

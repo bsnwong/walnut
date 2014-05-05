@@ -6,17 +6,16 @@
     @section('login')
     <div id="loginForm">
         {{ Form::open(array('url' => 'login')) }}
-        {{--Username--}}
-        {{ Form::label('username','用户名:') }}
-        {{ Form::text('username', '', array('placeholder' => 'Username...')) }}<br/>
+        {{--Email--}}
+        {{ Form::label('email','邮箱:') }}
+        {{ Form::text('email', '', array('placeholder' => 'Email...')) }}<br/>
         {{--Password--}}
         {{ Form::label('password', '密码:') }}
         {{ Form::password('password', array('placeholder' => 'Password...')) }}<br/>
-        {{--Password2--}}
-        {{ Form::label('password2', '确认密码') }}
-        {{ Form::password('password2', array('placeholder' => 'Password again...')) }}<br/>
         {{ Form::submit('Submit') }}
         {{ Form::close() }}
+        {{--Register button--}}
+        <a href="register">{{ Form::button('Register', array('id' => 'register')) }}</a>
     </div>
     @stop
     </body>

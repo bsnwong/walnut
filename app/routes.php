@@ -16,11 +16,16 @@
  * */
 Route::get('/', function()
 {
-	return View::make('login');
+    $user = Session::get('user');
+    if($user) {
+        return View::make('home');
+    }
+    else {
+        return View::make('login');
+    }
 });
 
 Route::get('about', function() {
-    phpinfo();
     exit;
     $users = User::all()->count();
     $view = View::make('home.about');
@@ -31,5 +36,15 @@ Route::get('about', function() {
     $new->name = 'hello';
     $new->save();
     return $view;
+});
+/*
+ |---------------------------------------------------------------------
+ |
+ |
+ |
+ |---------------------------------------------------------------------
+ * */
+Route::get('register', function() {
+   return View::make('');
 });
 Route::post('login', 'LoginController@judgeUser');

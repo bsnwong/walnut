@@ -1,12 +1,28 @@
 <!doctype html>
-    <html>
-<head>
+<html>
+    <head>
+    </head>
+    <body>
+        <div id="header">
+            <div id="nav">
+                <ul>
+                    <li>HOME</li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
 
-</head>
-<body>
-    <li>
-       @yield('content')
-    </li>
+            </div>
+        </div>
+        <div id="middle">
+            <div id="sider">
 
-</body>
-    </html>
+            </div>
+            <div id="content">
+
+            </div>
+        </div>
+        <div id="footer"></div>
+    </body>
+</html>

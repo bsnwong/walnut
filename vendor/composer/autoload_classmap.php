@@ -7,9 +7,15 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
+    'CreateCommentTable' => $baseDir . '/app/database/migrations/2014_05_04_072907_create_comment_table.php',
     'CreateCourseTable' => $baseDir . '/app/database/migrations/2014_05_04_012702_create_course_table.php',
+    'CreateCurrentNumTable' => $baseDir . '/app/database/migrations/2014_05_04_074149_create_current_num_table.php',
     'CreateOrganizationTable' => $baseDir . '/app/database/migrations/2014_05_03_095447_create_organization_table.php',
     'CreateQuestionTable' => $baseDir . '/app/database/migrations/2014_05_04_010228_create_question_table.php',
+    'CreateQuestionTable2nd' => $baseDir . '/app/database/migrations/2014_05_04_065052_create_question_table_2nd.php',
+    'CreateResultTable' => $baseDir . '/app/database/migrations/2014_05_04_065544_create_result_table.php',
+    'CreateResultTable2nd' => $baseDir . '/app/database/migrations/2014_05_04_071146_create_result_table2nd.php',
+    'CreateStaticTable' => $baseDir . '/app/database/migrations/2014_05_04_073459_create_static_table.php',
     'CreateTestTabl' => $baseDir . '/app/database/migrations/2014_05_03_142924_create_test_table.php',
     'CreateTestTable' => $baseDir . '/app/database/migrations/2014_05_03_021256_create_test_table.php',
     'CreateUserTable' => $baseDir . '/app/database/migrations/2014_05_03_123642_create_user_table.php',
