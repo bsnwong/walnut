@@ -18,12 +18,13 @@ Route::get('/', function()
 {
     $user = Session::get('user');
     if($user) {
-        return View::make('home');
+        return View::make('home.user');
     }
     else {
-        return View::make('login');
+        return View::make('home.public');
     }
 });
+Route::get('home', 'HomeController@showHome');
 
 Route::get('about', function() {
     exit;
@@ -39,12 +40,35 @@ Route::get('about', function() {
 });
 /*
  |---------------------------------------------------------------------
+ |show the register page
+ |---------------------------------------------------------------------
+ * */
+Route::get('register', function() {
+   return View::make('admin.register');
+});
+/*
+ |---------------------------------------------------------------------
+ |show the register page
+ |---------------------------------------------------------------------
+ * */
+Route::post('register', 'AdminController@register');
+/*
+ |---------------------------------------------------------------------
+ |go to the login page
+ |---------------------------------------------------------------------
+ * */
+Route::get('login', 'AdminController@judgeUser');
+/*
+ |---------------------------------------------------------------------
+ |get the form data of login page
+ |---------------------------------------------------------------------
+ * */
+Route::post('login', 'AdminController@judgeUser');
+/*
+ |---------------------------------------------------------------------
  |
  |
  |
  |---------------------------------------------------------------------
  * */
-Route::get('register', function() {
-   return View::make('');
-});
-Route::post('login', 'LoginController@judgeUser');
+Route::post('org/{node}', 'AdminController@queryOrg');

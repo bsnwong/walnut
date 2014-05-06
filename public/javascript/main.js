@@ -5,7 +5,7 @@
 $(document).ready(function() {
     $(".has_child").mouseover(function() {
         var current = $(this);
-        var children =  current.children();
+        var children =  current.children('ul');
         children.each(function() {
             if($(this).css('display') == 'none') {
                 $(this).fadeIn(200);
@@ -13,7 +13,7 @@ $(document).ready(function() {
         });
     });
     $(".has_child").mouseleave(function() {
-        var children =  $(this).children();
+        var children =  $(this).children('ul');
         children.each(function() {
             $(this).hide();
         });

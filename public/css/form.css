@@ -1,0 +1,56 @@
+#register_form {
+    display: table;
+    width: 700px;
+    height: 350px;
+    margin: 0 auto;
+    background-color: #FFF;
+    border: 1px dotted #ED3D1A;
+}
+#photo_show:hover {
+    /*box-shadow: 0px 0px 10px #ED3D1A;*/
+    /*transition:box-shadow 0.2s;*/
+}
+form {
+    padding: 50px;
+}
+form select {
+    min-width: 150px;
+    border: 1px dotted #ED3D1A;
+    background-color: #FFEFDB;
+}
+
+form input {
+    border: 1px dotted #ED3D1A;
+    background-color: #FFEFDB;
+}
+form input:not(.input_default) {
+    min-width: 200px;
+}
+
+form label {
+    margin-right: 20px;
+}
+#photo {
+    /*height: 250px;*/
+    position: relative;
+    top: 50px;
+}
+#photo_show {
+    background-color: #FFE7BA;
+    border: 1px dotted #ef7c61;
+    line-height: 200px;
+    text-align: center;
+    height: 200px;
+    width: 170px;
+}
+#photo_upload {
+}
+
+#submit{
+    float: right;
+    margin-right: 70px;
+    border: 1px dotted #ED3D1A;
+    background-color: #FFEFDB;
+}
+
+

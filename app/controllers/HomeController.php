@@ -20,4 +20,17 @@ class HomeController extends BaseController {
 		return View::make('home.about');
 	}
 
+    public function showHome() {
+        //test whether the user has logged in
+        $user = Session::get('user');
+        if($user) {
+            $view = View::make('home.user');
+            $view->user = $user;
+        }
+        else {
+            $view = View::make('home.public');
+        }
+        return $view;
+    }
+
 }

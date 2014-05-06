@@ -3,6 +3,10 @@ body {
     background-color: #FFF5EE;
     font-family: Helvetica, 'Microsoft YaHei', Times;
 }
+a {
+    color: #000;
+    text-decoration: none;
+}
 #wrap {
     margin: 0 auto;
 }
@@ -11,18 +15,21 @@ body {
     height: 70px;
     box-shadow: 0px 1px 20px #FF8C69;
 }
-#name {
-    float: left;
+.nav {
+    z-index: 999;
+}
+.nav a{
+    color: #FFF;
 }
 .nav1{
     height: 40px;
     position: relative;
     margin-bottom: 50px;
     float: right;
-    width: 550px;
-
+    width: 650px;
 }
-.nav1-li {
+.nav1-li{
+    color: #000;
     float: left;
     display: inline-block;
     text-align: center;
@@ -78,4 +85,10 @@ body {
     text-align: center;
     color: #FFF;
     line-height: 70px;
+}
+.float_right {
+    float: right;
+}
+.float_left{
+    float: left;
 }
