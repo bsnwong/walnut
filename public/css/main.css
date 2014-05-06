@@ -19,6 +19,7 @@ a {
     z-index: 999;
 }
 .nav a{
+    cursor: pointer;
     color: #FFF;
 }
 .nav1{

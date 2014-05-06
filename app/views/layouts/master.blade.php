@@ -41,12 +41,6 @@
         </div>
         <div class="clear"></div>
         <div id="middle">
-<!--            <div id="sider">-->
-<!---->
-<!--            </div>-->
-<!--            <div id="content">-->
-<!---->
-<!--            </div>-->
             @yield('middle')
         </div>
         <div class="clear"></div>

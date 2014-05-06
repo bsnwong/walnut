@@ -83,6 +83,13 @@
         <td>外键(Organization:id)，代号表示</td>
     </tr>
     <tr>
+        <td>photo</td>
+        <td>150</td>
+        <td>varchar</td>
+        <td>头像路径</td>
+        <td></td>
+    </tr>
+    <tr>
         <td>created_at</td>
         <td></td>
         <td>date</td>
