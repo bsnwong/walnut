@@ -83,7 +83,7 @@
         <td>外键(Organization:id)，代号表示</td>
     </tr>
     <tr>
-        <td>photo</td>
+        <td>photo_url</td>
         <td>150</td>
         <td>varchar</td>
         <td>头像路径</td>
@@ -256,6 +256,13 @@
         <td>enum</td>
         <td>难度(0,1,2,3,4,5,6,7,8,9,10)</td>
         <td>0代表10级以上</td>
+    </tr>
+    <tr>
+        <td>score</td>
+        <td></td>
+        <td>tinyint</td>
+        <td>分值</td>
+        <td>默认为零</td>
     </tr>
     <tr>
         <td>correct</td>

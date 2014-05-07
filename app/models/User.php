@@ -12,14 +12,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $table = 'User';
 
-//    public  $username;
-//    public $sexual;
-//    public $email;
-//    public  $password;
-//    public  $school;
-//    public  $college;
-//    public  $major;
-//    public  $school_num;
     protected $hidden = array('password');
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -59,8 +51,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
     /*
      |---------------------------------------------------------
-     |
+     |check if email exists
      |---------------------------------------------------------
      * */
+    public function scopeEmailExists($query, $email) {
+        return $query->where('email', '=', $email);
+    }
 
 }

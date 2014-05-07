@@ -66,9 +66,14 @@ Route::get('login', 'AdminController@judgeUser');
 Route::post('login', 'AdminController@judgeUser');
 /*
  |---------------------------------------------------------------------
- |
- |
- |
+ |Route to adminController to query the children items of selected item
  |---------------------------------------------------------------------
  * */
 Route::post('org/{node}', 'AdminController@queryOrg');
+
+/*
+ |---------------------------------------------------------------------
+ |Route to
+ |---------------------------------------------------------------------
+ * */
+Route::post('email', 'AdminController@emailExists');
