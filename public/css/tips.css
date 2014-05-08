@@ -1,0 +1,11 @@
+.msg {
+    margin: 0 auto;
+    background-color: #FFF;
+    border: 2px dotted #ED3D1A;
+    border-radius: 10px;
+    width: 300px;
+    /*min-height: 100px;*/
+}
+#content {
+    margin: 20px;
+}

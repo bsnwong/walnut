@@ -60,7 +60,7 @@
         </div>
     </div>
     <div class="clear"></div>
-    {{ Form::submit('提交', array('id' => 'submit', 'class' => 'input_default', 'disabled' => true)) }}
+    {{ Form::submit('提交', array('id' => 'submit', 'class' => 'input_default submit', 'disabled' => true)) }}
     {{ Form::close() }}
 </div>
 @stop

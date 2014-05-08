@@ -7,9 +7,10 @@
 <body>
     <div id="wrap">
         <div id="header">
+            <div id="logo">{{ Form::image('image/logo.png', 'logo', array('width' => 380)) }}</div>
             <div>
                 <ul class="nav1">
-                    <li class="nav1-li"><a href="home">主页</a></li>
+                    <li class="nav1-li"><a href="/home">主页</a></li>
                     <li class="nav1-li has_child">个人
                         <ul class="nav2 nav">
                             <li class="nav2-li">成绩查询</li>
@@ -26,12 +27,12 @@
                     </li>
                     <li class="nav1-li">公告</li>
                     <li class="nav1-li">关于</li>
-                    @if( Session::get('user'))
-                        <li class="nav1-li"><a href="logout">退出</a></li>
+                    @if( Auth::check() )
+                        <li class="nav1-li"><a href="/logout">退出</a></li>
                     @else
-                        <li class="nav1-li has_child"><a href="login">登入</a>
+                        <li class="nav1-li has_child"><a href="/login">登入</a>
                             <ul class="nav2 nav">
-                                <li class="nav2-li"><a href="register">注册</a></li>
+                                <li class="nav2-li"><a href="/register">注册</a></li>
                             </ul>
                         </li>
                     @endif

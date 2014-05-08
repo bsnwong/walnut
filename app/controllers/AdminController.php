@@ -7,17 +7,39 @@
  */
 class AdminController extends BaseController {
     //judge the user
-    public function judgeUser() {
+    public function checkUser() {
         if(Session::get('user')) {
-            Redirector::to('/user/'.Session::get('user'));
+            Redirect::to('/user/'.Session::get('user'));
         }
         else {
-            //get the info from login form
-            $email = Input::get('email');
-            $password = Input::get('password');
-            $result = DB::table('User')->where('email', '=', $email)->get();
+            $view = View::make('admin.login');
+            return $view;
+//            return Redirect::to('login/'.);
         }
     }
+    /*
+     |---------------------------------------------------------------------
+     |Log user in
+     |---------------------------------------------------------------------
+     * */
+    public function loginUser() {
+        $email = Input::get('email');
+        $password = Input::get('password');
+        $user = array(
+            'email' => $email,
+            'password' => $password
+        );
+        if(Auth::attempt($user)) {
+            if(Auth::check()) {
+                View::share('email', $email);
+            }
+            return Redirect::to('/');
+        }
+        else {
+            return Redirect::to('/tips/'.'用户名或密码输入错误...');
+        }
+    }
+
 
     /*
      |---------------------------------------------------------------------

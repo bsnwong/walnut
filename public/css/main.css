@@ -7,6 +7,13 @@ a {
     color: #000;
     text-decoration: none;
 }
+#logo {
+    float: left;
+    /*position: relative;*/
+    /*left: 200px;*/
+    /*margin-top: 10px;*/
+
+}
 #wrap {
     margin: 0 auto;
 }
@@ -77,7 +84,7 @@ a {
     clear: both;
 }
 #middle {
-    min-height: 750px;
+    min-height: 600px;
 }
 #footer {
     background-color: #FFAF7A;

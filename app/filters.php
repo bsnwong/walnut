@@ -78,3 +78,9 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+/*
+ |-------------------------------------------------------------------------
+ |Check user logged in or not
+ |-------------------------------------------------------------------------
+ * */

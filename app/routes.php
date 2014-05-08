@@ -24,9 +24,9 @@ Route::get('/', function()
         return View::make('home.public');
     }
 });
-Route::get('home', 'HomeController@showHome');
+Route::get('/home', 'HomeController@showHome');
 
-Route::get('about', function() {
+Route::get('/about', function() {
     exit;
     $users = User::all()->count();
     $view = View::make('home.about');
@@ -43,7 +43,7 @@ Route::get('about', function() {
  |show the register page
  |---------------------------------------------------------------------
  * */
-Route::get('register', function() {
+Route::get('/register', function() {
    return View::make('admin.register');
 });
 /*
@@ -51,29 +51,56 @@ Route::get('register', function() {
  |show the register page
  |---------------------------------------------------------------------
  * */
-Route::post('register', 'AdminController@register');
+Route::post('/register', 'AdminController@register')->before('csrf');
 /*
  |---------------------------------------------------------------------
  |go to the login page
  |---------------------------------------------------------------------
  * */
-Route::get('login', 'AdminController@judgeUser');
+Route::get('/login', 'AdminController@checkUser')->before('guest');
 /*
  |---------------------------------------------------------------------
  |get the form data of login page
  |---------------------------------------------------------------------
  * */
-Route::post('login', 'AdminController@judgeUser');
+Route::post('/login', 'AdminController@loginUser')->before('csrf');
 /*
  |---------------------------------------------------------------------
  |Route to adminController to query the children items of selected item
  |---------------------------------------------------------------------
  * */
-Route::post('org/{node}', 'AdminController@queryOrg');
+Route::post('/org/{node}', 'AdminController@queryOrg');
 
 /*
  |---------------------------------------------------------------------
- |Route to
+ |Route to the adminController to check email exists or not
  |---------------------------------------------------------------------
  * */
-Route::post('email', 'AdminController@emailExists');
+Route::post('/email', 'AdminController@emailExists');
+/*
+ |---------------------------------------------------------------------
+ |Route to the adminController to check email exists and password
+ |valid or not
+ |---------------------------------------------------------------------
+ * */
+Route::get('/tips/{msg}', function($msg) {
+    $view = View::make('admin.tips');
+    $view->msg = $msg;
+    return $view;
+});
+/*
+ |---------------------------------------------------------------------
+ |Route to log out the current user
+ |---------------------------------------------------------------------
+ * */
+ROute::get('/logout', function() {
+    if(!Auth::check()) {
+        return Rediret::to('/tips/'.'您已经退出...');
+    }
+    else {
+        Auth::logout();
+        return Redirect::to('/');
+    }
+});
+
+

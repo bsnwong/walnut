@@ -7,6 +7,13 @@
     border: 2px dotted #ED3D1A;
     border-radius: 10px;
 }
+#login_form {
+    width: 320px;
+    height: 150px;
+    margin: 0 auto;
+    border-radius: 10px;
+    border: 2px dotted #ED3D1A;
+}
 #photo_show:hover {
     /*box-shadow: 0px 0px 10px #ED3D1A;*/
     /*transition:box-shadow 0.2s;*/
@@ -29,8 +36,8 @@ form input:not(.input_default) {
     min-width: 200px;
 }
 
-form label {
-    margin-right: 20px;
+form label:not(.label_default) {
+    margin-right: 25px;
 }
 #photo {
     /*margin: 0 auto;*/
@@ -59,7 +66,7 @@ form label {
     /*margin: 0 auto;*/
 }
 
-#submit{
+.submit{
     float: right;
     margin: 20px;
     height: 40px;
@@ -73,6 +80,22 @@ form label {
     box-shadow: 0px 0px 20px #FFAAAA;
     transition: background-color 0.3s;
     /*transition: box-shadow 0.3s;*/
+}
+#login_submit, #register {
+    margin-left: 50px;
+    height: 25px;
+    width: 50px;
+    float: none;
+}
+#login_submit:hover {
+    background-color: #FE8A59;
+    box-shadow: 0px 0px 20px #FFAAAA;
+    transition: background-color 0.3s;
+}
+#register:hover {
+    background-color: #FE8A59;
+    box-shadow: 0px 0px 20px #FFAAAA;
+    transition: background-color 0.3s;
 }
 .tips {
     font-size: 14px;
