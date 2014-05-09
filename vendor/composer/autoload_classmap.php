@@ -6,7 +6,14 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddPhotoFieldToUser' => $baseDir . '/app/database/migrations/2014_05_06_094129_add_photo_field_to_user.php',
+    'AddPointToQuestion' => $baseDir . '/app/database/migrations/2014_05_06_131138_add_point_to_question.php',
+    'AdminController' => $baseDir . '/app/controllers/AdminController.php',
+    'AlterPasswordFieldUserTable' => $baseDir . '/app/database/migrations/2014_05_06_135011_alter_password_field_user_table.php',
+    'AlterPasswordFieldUserTable2nd' => $baseDir . '/app/database/migrations/2014_05_06_135037_alter_password_field_user_table2nd.php',
+    'AlterPasswordFieldUserTable3rd' => $baseDir . '/app/database/migrations/2014_05_06_135818_alter_password_field_user_table3rd.php',
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
+    'CreatAdminTable' => $baseDir . '/app/database/migrations/2014_05_06_043321_creat_admin_table.php',
     'CreateCommentTable' => $baseDir . '/app/database/migrations/2014_05_04_072907_create_comment_table.php',
     'CreateCourseTable' => $baseDir . '/app/database/migrations/2014_05_04_012702_create_course_table.php',
     'CreateCurrentNumTable' => $baseDir . '/app/database/migrations/2014_05_04_074149_create_current_num_table.php',
@@ -22,9 +29,12 @@ return array(
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',
     'HomeController' => $baseDir . '/app/controllers/HomeController.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
-    'LoginController' => $baseDir . '/app/controllers/LoginController.php',
+    'ModifyDefaultTypeUser' => $baseDir . '/app/database/migrations/2014_05_08_125059_modify_default_type_user.php',
+    'ModifyDefaultTypeUser2nd' => $baseDir . '/app/database/migrations/2014_05_08_125127_modify_default_type_user2nd.php',
+    'ModifyDefaultTypeUser3rd' => $baseDir . '/app/database/migrations/2014_05_08_125718_modify_default_type_user3rd.php',
     'Organization' => $baseDir . '/app/models/Organization.php',
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs/SessionHandlerInterface.php',
     'TestCase' => $baseDir . '/app/tests/TestCase.php',
     'User' => $baseDir . '/app/models/User.php',
+    'Walnut' => $baseDir . '/app/lib/Walnut.php',
 );
