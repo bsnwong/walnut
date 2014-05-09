@@ -36,6 +36,9 @@ a {
     float: right;
     width: 650px;
 }
+li {
+    list-style: none;
+}
 .nav1-li{
     color: #000;
     float: left;
@@ -85,6 +88,7 @@ a {
 }
 #middle {
     min-height: 600px;
+    margin: 20px;
 }
 #footer {
     background-color: #FFAF7A;
@@ -93,10 +97,14 @@ a {
     text-align: center;
     color: #FFF;
     line-height: 70px;
+    margin-top: 20px;
 }
 .float_right {
     float: right;
 }
 .float_left{
     float: left;
+}
+.underline {
+    border-bottom: 3px dotted #ED3D1A;
 }

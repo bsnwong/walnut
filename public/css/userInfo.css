@@ -1,0 +1,54 @@
+#title {
+    text-align: center;
+    color: #666;
+    border-bottom: 3px solid #ED3D1A;
+    padding-bottom: 20px;
+}
+#container {
+    float: right;
+    width: 980px;
+    background-color: #FFE4C4;
+    min-height: 600px;
+    border-radius: 10px;
+    border: 3px dotted #ED3D1A;
+}
+#content {
+    margin: 0 auto;
+    width: 500px;
+    height: 300px;
+    border: 2px dotted #ED3D1A;
+    border-radius: 10px;
+}
+#content strong {
+    color: #666;
+}
+#content li {
+    color: #ED3D1A;
+}
+#content #photo_show {
+    /*margin-right: 40px;*/
+    width: 150px;
+    height: 180px;
+    margin: 15px;
+    margin-right: 50px;
+}
+#content #info {
+    margin: 10px;
+    line-height: 40px;
+    margin-left: 50px;
+}
+#content img {
+    height: inherit;
+    width: inherit;
+    border: 1px dotted #ef7c61;
+    border-radius: 10px;
+}
+
+#content .underline {
+    margin-top: 15px;
+}
+
+#school_num {
+    float: right;
+    margin: 10px;
+}

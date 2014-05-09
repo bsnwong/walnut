@@ -1,0 +1,23 @@
+#sider {
+    float: left;
+    /*color: #FFAAAA;*/
+    width: 300px;
+    min-height: 600px;
+    background-color: #FFE4C4;
+    border-radius: 10px;
+    border: 3px dotted #ED3D1A;
+}
+#sider * {
+    color: #ED3D1A;
+}
+#sider *:hover {
+    color: #666;
+    transition: color 0.4s;
+}
+#sider li ul {
+    margin-left: -20px;
+}
+#sider ul li:before {
+    content: '↳';
+    color: #CCC;
+}

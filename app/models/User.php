@@ -64,6 +64,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     public function scopePasswordValid($query, $password) {
         return $query->where('password', '=', $password);
     }
+    /*
+     |---------------------------------------------------------
+     |Return the organization info
+     |---------------------------------------------------------
+     * */
+//    public function org() {
+//        return $this->belongsToManny('Organization');
+//    }
 
 
 

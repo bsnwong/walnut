@@ -39,7 +39,7 @@ $(document).ready(function() {
        }
        $.ajax({
            type: 'POST',
-           url: 'org/' + val,
+           url: '/org/' + val,
            success: function(msg) {
                msg = JSON.parse(msg);
                result = msg.result;

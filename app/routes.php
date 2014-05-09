@@ -70,6 +70,12 @@ Route::post('/login', 'AdminController@loginUser')->before('csrf');
  |---------------------------------------------------------------------
  * */
 Route::post('/org/{node}', 'AdminController@queryOrg');
+/*
+ |---------------------------------------------------------------------
+ |Route to adminController to get the
+ |---------------------------------------------------------------------
+ * */
+Route::post('/usr/{user}/section/org/{node}', 'AdminController@queryOrg');
 
 /*
  |---------------------------------------------------------------------
@@ -93,7 +99,7 @@ Route::get('/tips/{msg}', function($msg) {
  |Route to log out the current user
  |---------------------------------------------------------------------
  * */
-ROute::get('/logout', function() {
+Route::get('/logout', function() {
     if(!Auth::check()) {
         return Rediret::to('/tips/'.'您已经退出...');
     }
@@ -101,6 +107,15 @@ ROute::get('/logout', function() {
         Auth::logout();
         return Redirect::to('/');
     }
+});
+/*
+ |---------------------------------------------------------------------
+ |Route to user page
+ |---------------------------------------------------------------------
+ * */
+Route::get('/user/{name}/section/{section}', 'AdminController@getUserInfo');
+Route::get('/user/{name}/section', function($name) {
+    return View::make('home.user');
 });
 
 

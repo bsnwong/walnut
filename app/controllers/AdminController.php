@@ -25,15 +25,21 @@ class AdminController extends BaseController {
     public function loginUser() {
         $email = Input::get('email');
         $password = Input::get('password');
+        $type = Input::get('type');
         $user = array(
             'email' => $email,
-            'password' => $password
+            'password' => $password,
+            'type' => $type
         );
+        var_dump($type);
         if(Auth::attempt($user)) {
             if(Auth::check()) {
                 View::share('email', $email);
             }
-            return Redirect::to('/');
+            if($type === 0) {
+                return Redirect::to('/admin/'.Auth::user()->name);
+            }
+            return Redirect::to('/user/'.Auth::user()->name.'/section'.'\/');
         }
         else {
             return Redirect::to('/tips/'.'用户名或密码输入错误...');
@@ -113,5 +119,41 @@ class AdminController extends BaseController {
             return json_encode(array('success' => true, 'message' => '邮箱可用...'));
         }
     }
+    /*
+     |---------------------------------------------------------------------
+     |Get user info
+     |---------------------------------------------------------------------
+     * */
+    public function getUserInfo($name, $section) {
+        $results = array();
+        if($section) {
+            switch($section) {
+                case 'private' :
+                    $school = DB::table('Organization')
+                        ->where('id', '=', Auth::user()->school)
+                        ->select('name')
+                        ->first();
+                    $college = DB::table('Organization')
+                        ->where('id', '=', Auth::user()->college)
+                        ->first();
+                    $major = DB::table('Organization')
+                        ->where('id', '=', Auth::user()->major)
+                        ->first();
+                    $results = array(
+                        'school' => $school->name,
+                        'college' => $college->name,
+                        'major' => $major->name
+                    );
+                    break;
+                case 'edit' :
 
+                    break;
+            }
+            $section = '.'.$section;
+            return View::make('home.user')
+                ->nest('childView', 'home'.$section, array(
+                    'section' => $section,
+                    'results' => $results));
+        }
+    }
 }

@@ -5,6 +5,7 @@
 @stop
 {{--The register form--}}
 @section('middle')
+
 <div id="register_form">
     <div id="form_input">
         {{ Form::open(array('url' => 'register', 'enctype' => 'multipart/form-data')) }}
@@ -29,16 +30,16 @@
             {{--Select the school from database--}}
             {{ Form::label('school', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学校:') }}
             {{ Form::macro('selectSchool', function() {
-                $school = DB::table('Organization')
-                ->where('parent_node', '=', 0)
-                ->select('id', 'name')
-                ->get();
-                $school_item = array();
-                foreach($school as $item) {
-                $school_item[$item->id] = $item->name;
-                }
-                return Form::select('school', $school_item);
-                }
+            $school = DB::table('Organization')
+            ->where('parent_node', '=', 0)
+            ->select('id', 'name')
+            ->get();
+            $school_item = array();
+            foreach($school as $item) {
+            $school_item[$item->id] = $item->name;
+            }
+            return Form::select('school', $school_item);
+            }
             ) }}
             *{{ Form::selectSchool() }}<br/><strong class="tips" id="school_tip"></strong><br/><br/>
             {{ Form::label('college', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学院:') }}
@@ -64,7 +65,6 @@
     {{ Form::close() }}
 </div>
 @stop
-
 @section('script')
     {{ HTML::script('javascript/request.js') }}
 @stop

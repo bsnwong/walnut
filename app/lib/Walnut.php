@@ -35,7 +35,8 @@ class Walnut {
             if(!is_dir($dir)) {
                 mkdir($dir, 0777);
             }
-            $file = $dir.time().'photo.'.$type[1];
+            $name = time().'photo.'.$type[1];
+            $file = $dir.$name;
             $size_conf = Config::get('imageSize.'.$inch);
 //        Walnut::json_enconde_end($size_conf);
             //get the image size and make it fit
@@ -91,7 +92,7 @@ class Walnut {
                 unlink($file);
                 Walnut::json_encode_end(array('success' => false, 'message' => '3'));
             }
-            $object->photo_url = $file;
+            $object->photo_url = 'upload/'.$object->email.'/'.$name;
         }
         return true;
     }

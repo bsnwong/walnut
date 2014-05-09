@@ -18,7 +18,7 @@
         {{--User type--}}
         {{ Form::label('type', '用户类型:') }}
         {{ Form::label('normal', '普通', array('class' => 'label_default')) }}
-        {{ Form::radio('normal', 0, true, array('class' => 'input_default', 'name' => 'type')) }}
+        {{ Form::radio('normal', 1, true, array('class' => 'input_default', 'name' => 'type')) }}
         {{ Form::label('admin', '管理员:', array('class' => 'label_default')) }}
         {{ Form::radio('admin', 0, null, array('class' => 'input_default', 'name' => 'type')) }}
         {{ Form::submit('提交', array('id' => 'login_submit', 'class' => 'input_default submit')) }}

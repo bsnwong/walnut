@@ -1,0 +1,114 @@
+#title {
+    text-align: center;
+    color: #666;
+    border-bottom: 3px solid #ED3D1A;
+    padding-bottom: 20px;
+}
+#container {
+    float: right;
+    width: 980px;
+    background-color: #FFE4C4;
+    min-height: 600px;
+    border-radius: 10px;
+    border: 3px dotted #ED3D1A;
+}
+#content {
+    margin: 0 auto;
+    width: 500px;
+    height: 300px;
+    border: 2px dotted #ED3D1A;
+    border-radius: 10px;
+}
+label {
+    color: #666;
+    font-weight: bolder;
+}
+#edit_form {
+    margin: 10px;
+    margin-top: -40px;
+    padding: 30px;
+}
+#photo_show:hover {
+    /*box-shadow: 0px 0px 10px #ED3D1A;*/
+    /*transition:box-shadow 0.2s;*/
+}
+form {
+    line-height: 10px;
+    padding: 15px;
+}
+form select {
+    min-width: 150px;
+    border: 1px dotted #ED3D1A;
+    background-color: #FFEFDB;
+}
+
+form input {
+    border: 1px dotted #ED3D1A;
+    background-color: #FFEFDB;
+}
+form input:not(.input_default) {
+    min-width: 200px;
+}
+
+form label:not(.label_default) {
+    margin-right: 25px;
+}
+#photo {
+}
+#photo_show {
+    margin: 0 auto;
+    background-color: #FFE7BA;
+    /*border: 1px dotted #ef7c61;*/
+    /*line-height: 200px;*/
+    /*text-align: center;*/
+    border-radius: 10px;
+    height: 200px;
+    width: 170px;
+}
+#img_photo {
+    height: inherit;
+    width: inherit;
+    border: 1px dotted #ef7c61;
+    border-radius: 10px;
+}
+#photo_upload {
+    margin-top: 10px;
+    /*margin: 0 auto;*/
+}
+
+.submit{
+    float: right;
+    margin: 20px;
+    height: 40px;
+    width: 140px;
+    border: 1px dotted #ED3D1A;
+    background-color: #FFEFDB;
+    transition: background-color 0.3s;
+}
+#submit:hover {
+    background-color: #FE8A59;
+    box-shadow: 0px 0px 20px #FFAAAA;
+    transition: background-color 0.3s;
+    /*transition: box-shadow 0.3s;*/
+}
+#login_submit, #register {
+    margin-left: 50px;
+    height: 25px;
+    width: 50px;
+    float: none;
+}
+#login_submit:hover {
+    background-color: #FE8A59;
+    box-shadow: 0px 0px 20px #FFAAAA;
+    transition: background-color 0.3s;
+}
+#register:hover {
+    background-color: #FE8A59;
+    box-shadow: 0px 0px 20px #FFAAAA;
+    transition: background-color 0.3s;
+}
+.tips {
+    font-size: 14px;
+    margin-left: 100px;
+    color: #ED3D1A;
+}

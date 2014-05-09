@@ -18,16 +18,21 @@
                         </ul>
                     </li>
                     <li class="nav1-li has_child">功能
+                        @if( Auth::check() )
                         <ul class="nav2 nav">
+                            @if( Auth::user()->type == 0)
                             <li class="nav2-li">管理试题</li>
+                            @endif
                             <li class="nav2-li">选择试题</li>
                             <li class="nav2-li">测试分析</li>
                             <li class="nav2-li">生成成绩单</li>
                         </ul>
+                        @endif
                     </li>
                     <li class="nav1-li">公告</li>
                     <li class="nav1-li">关于</li>
                     @if( Auth::check() )
+<!--                        <div hidde></div>-->
                         <li class="nav1-li"><a href="/logout">退出</a></li>
                     @else
                         <li class="nav1-li has_child"><a href="/login">登入</a>
