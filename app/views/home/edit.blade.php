@@ -2,7 +2,7 @@
 <div><h3 id="title">修改个人信息</h3></div>
 <div id="edit_form">
     <div id="form_input">
-        {{ Form::open(array('url' => 'register', 'enctype' => 'multipart/form-data')) }}
+        {{ Form::open(array('url' => '/edit/user/'.Auth::user()->id, 'enctype' => 'multipart/form-data')) }}
         <div class="float_left">
             {{ Form::hidden('MAX_FILE_SIZE', 1024*1024) }}
             {{ Form::label('name', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名:') }}
@@ -42,7 +42,7 @@
             {{ Form::label('major', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;专业:') }}
             *{{ Form::select('major', array()) }}<br/><strong class="tips" id="major_tip"></strong><br/><br/>
             {{ Form::label('school_num', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号:') }}
-            *{{ Form::text('school_num', '', array('placeholder' => '请输入您的学号...')) }}<br/><strong class="tips" id="school_num_tip"></strong><br/>
+            *{{ Form::text('school_num', Auth::user()->school_num) }}<br/><strong class="tips" id="school_num_tip"></strong><br/>
             <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（注：带*号均为必填项...）
             <br/>
         </div>

@@ -129,9 +129,11 @@ $(document).ready(function() {
      | -----------------------------------------------------
      * */
     var sn_valid = false;
+    var sn;
+    var reg2 = /^[0-9]{6,10}$/;
     $('#school_num').on('input', function() {
-        var reg = /^[0-9]{6,10}$/;
-        var is_vaild = reg.test($(this).val());
+        sn = $(this).val();
+        var is_vaild = reg2.test(sn);
         if(!is_vaild) {
             $('#school_num_tip').text('长度不在6-10位之间或包含非数字...');
             send = false;
@@ -175,6 +177,7 @@ $(document).ready(function() {
             pswd1_valid = true;
             pswd2_valid = true;
         }
+        if(reg2.test($('#school_num').val())) sn_valid = true;
         if(name_valid && college_valid && pswd_old_valid && major_valid && sn_valid &&  pswd1_valid && pswd2_valid) {
             send = true;
         }

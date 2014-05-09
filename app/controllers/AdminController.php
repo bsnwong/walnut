@@ -85,7 +85,7 @@ class AdminController extends BaseController {
                 $flag = Walnut::imageUpload('one_inch', $user);
                 if($flag === true) {
                     if($user->save()) {
-                        return json_encode(array('success' => true, 'message' => '恭喜你，注册成功...'));
+                        echo json_encode(array('success' => true, 'message' => '恭喜你，注册成功...'));
                     }
                     else {
                         Walnut::json_encode_end(array('success' => false, 'message' => '很遗憾，注册失败...'));
@@ -126,34 +126,85 @@ class AdminController extends BaseController {
      * */
     public function getUserInfo($name, $section) {
         $results = array();
-        if($section) {
-            switch($section) {
-                case 'private' :
-                    $school = DB::table('Organization')
-                        ->where('id', '=', Auth::user()->school)
-                        ->select('name')
-                        ->first();
-                    $college = DB::table('Organization')
-                        ->where('id', '=', Auth::user()->college)
-                        ->first();
-                    $major = DB::table('Organization')
-                        ->where('id', '=', Auth::user()->major)
-                        ->first();
-                    $results = array(
-                        'school' => $school->name,
-                        'college' => $college->name,
-                        'major' => $major->name
-                    );
-                    break;
-                case 'edit' :
+        if(Auth::check()) {
+            if($section) {
+                switch($section) {
+                    case 'private' :
+                        $school = DB::table('Organization')
+                            ->where('id', '=', Auth::user()->school)
+                            ->select('name')
+                            ->first();
+                        $college = DB::table('Organization')
+                            ->where('id', '=', Auth::user()->college)
+                            ->first();
+                        $major = DB::table('Organization')
+                            ->where('id', '=', Auth::user()->major)
+                            ->first();
+                        $results = array(
+                            'school' => $school->name,
+                            'college' => $college->name,
+                            'major' => $major->name
+                        );
+                        break;
+                    case 'edit' :
 
-                    break;
+                        break;
+                }
+                $section = '.'.$section;
+                return View::make('home.user')
+                    ->nest('childView', 'home'.$section, array(
+                        'section' => $section,
+                        'results' => $results));
             }
-            $section = '.'.$section;
-            return View::make('home.user')
-                ->nest('childView', 'home'.$section, array(
-                    'section' => $section,
-                    'results' => $results));
         }
+        else {
+            return Redirect::to('/tips/'.'您还未登录...');
+        }
+    }
+    /*
+     |----------------------------------------------------------------------
+     |Edit user info
+     |----------------------------------------------------------------------
+     * */
+    public function editUserInfo($id) {
+        if(Auth::check()) {
+            DB::transaction(function() use($id) {
+                $user = array(
+                    'id' => $id,
+                    'password' => Input::get('password_old')
+                );
+                if(Auth::attempt($user)) {
+                    $user = User::find($id);
+                    $user->name = Input::get('name');
+                    $user->sex = Input::get('sexual');
+//                    $user->email = Input::get('email');
+                    $user->password = Hash::make(Input::get('password2'));
+                    $user->school = Input::get('school');
+                    $user->college = Input::get('college');
+                    $user->major = Input::get('major');
+                    $user->school_num = Input::get('school_num');
+                    //create the directory of the uploaded photo
+                    $flag = Walnut::imageUpload('one_inch', $user);
+                    if($flag === true) {
+                        if($user->update()) {
+                            echo json_encode(array('success' => false, 'message' => '修改成功...'));
+                        }
+                        else {
+                            echo json_encode(array('success' => false, 'message' => '修改失败...'));
+                        }
+                    }
+                    else {
+                        echo json_encode(array('success' => false, 'message' => '修改失败...'));
+                    }
+                }
+                else {
+                    echo json_encode(array('success' => false, 'message' => '旧密码不正确...'));
+                }
+            });
+        }
+        else {
+            echo  json_encode(array('success' => false, 'message' => '您还未登录...'));
+        }
+
     }
 }

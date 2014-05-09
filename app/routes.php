@@ -57,7 +57,7 @@ Route::post('/register', 'AdminController@register')->before('csrf');
  |go to the login page
  |---------------------------------------------------------------------
  * */
-Route::get('/login', 'AdminController@checkUser')->before('guest');
+Route::get('/login', 'AdminController@checkUser');
 /*
  |---------------------------------------------------------------------
  |get the form data of login page
@@ -72,7 +72,7 @@ Route::post('/login', 'AdminController@loginUser')->before('csrf');
 Route::post('/org/{node}', 'AdminController@queryOrg');
 /*
  |---------------------------------------------------------------------
- |Route to adminController to get the
+ |Route to adminController to get the children items of selected item
  |---------------------------------------------------------------------
  * */
 Route::post('/usr/{user}/section/org/{node}', 'AdminController@queryOrg');
@@ -115,7 +115,18 @@ Route::get('/logout', function() {
  * */
 Route::get('/user/{name}/section/{section}', 'AdminController@getUserInfo');
 Route::get('/user/{name}/section', function($name) {
-    return View::make('home.user');
+    if(Auth::check()){
+        return View::make('home.user');
+    }
+    else {
+        return Redirect::to('/tips/'.'您还未登录...');
+    }
 });
+/*
+ |----------------------------------------------------------------------
+ |Route to modify the user info
+ |----------------------------------------------------------------------
+ * */
+Route::post('/edit/user/{id}', 'AdminController@editUserInfo')->before(array('csrf'));
 
 

@@ -57,7 +57,12 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('/');
+	if (Auth::check()) {
+        return Redirect::to('/user/'.Auth::user()->name.'/section');
+    }
+    else {
+        return Redirect::to('/tips/'.'您还未登录...');
+    }
 });
 
 /*
