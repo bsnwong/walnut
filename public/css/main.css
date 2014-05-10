@@ -108,3 +108,17 @@ li {
 .underline {
     border-bottom: 3px dotted #ED3D1A;
 }
+#title {
+    text-align: center;
+    color: #666;
+    border-bottom: 3px solid #ED3D1A;
+    padding-bottom: 20px;
+}
+#container {
+    float: right;
+    width: 980px;
+    background-color: #FFE4C4;
+    min-height: 600px;
+    border-radius: 10px;
+    border: 3px dotted #ED3D1A;
+}

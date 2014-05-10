@@ -57,11 +57,23 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) {
-        return Redirect::to('/user/'.Auth::user()->name.'/section');
+	if (!Auth::check()) {
+        return Redirect::to('/tips/'.'您还未登录...');
     }
     else {
+        if(Auth::user()->type != 1) {
+            return Redirect::to('/tips/'.'请以普通用户登录...');
+        }
+    }
+});
+Route::filter('admin', function() {
+    if(!Auth::check()) {
         return Redirect::to('/tips/'.'您还未登录...');
+    }
+    else {
+        if(Auth::user()->type != 0) {
+            return Redirect::to('/tips/'.'您不是管理员...');
+        }
     }
 });
 

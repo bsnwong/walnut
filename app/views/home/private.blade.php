@@ -1,5 +1,5 @@
 {{ HTML::style('css/userInfo.css') }}
-<div><h3 id="title">个人信息</h3></div>
+<div><h3 id="title">查看个人信息</h3></div>
 <div id="content">
     <div class="float_left">
         <div id="info">

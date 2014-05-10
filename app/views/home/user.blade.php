@@ -10,9 +10,9 @@
 @section('middle')
     <div id="sider">
         <ul> <strong>功能选项</strong>
-            <li><a href="javascript:void(0);" class="toggle"></a><a class="detail" href="private">个人信息</a>
+            <li><a href="javascript:void(0);" class="toggle"></a><a class="detail" href="/user/1/{{ Auth::user()->name }}/{{ Auth::user()->id }}/section/private">个人信息</a>
                 <ul>
-                    <li><a class="detail" href="edit">修改个人信息</a></li>
+                    <li> <a class="detail" href="/user/1/{{ Auth::user()->name }}/{{ Auth::user()->id }}/section/edit">修改个人信息</a></li>
                     <li><a href="javascript:void(0);" class="toggle"></a>修改
                         <ul>
                             <li>asdas</li>

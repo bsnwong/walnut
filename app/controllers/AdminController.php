@@ -31,15 +31,17 @@ class AdminController extends BaseController {
             'password' => $password,
             'type' => $type
         );
-        var_dump($type);
         if(Auth::attempt($user)) {
             if(Auth::check()) {
                 View::share('email', $email);
             }
-            if($type === 0) {
-                return Redirect::to('/admin/'.Auth::user()->name);
+            if($type == 0) {
+
+                return Redirect::to('/admin/0/'.Auth::user()->name.'/'.Auth::user()->id.'/section');
             }
-            return Redirect::to('/user/'.Auth::user()->name.'/section'.'\/');
+            else {
+                return Redirect::to('/user/1/'.Auth::user()->name.'/'.Auth::user()->id.'/section');
+            }
         }
         else {
             return Redirect::to('/tips/'.'用户名或密码输入错误...');
@@ -124,7 +126,7 @@ class AdminController extends BaseController {
      |Get user info
      |---------------------------------------------------------------------
      * */
-    public function getUserInfo($name, $section) {
+    public function getUserInfo($type, $name, $id , $section) {
         $results = array();
         if(Auth::check()) {
             if($section) {
@@ -151,10 +153,21 @@ class AdminController extends BaseController {
                         break;
                 }
                 $section = '.'.$section;
-                return View::make('home.user')
-                    ->nest('childView', 'home'.$section, array(
-                        'section' => $section,
-                        'results' => $results));
+                if($type == 0) {
+                    return View::make('home.manage')
+                        ->nest('childView', 'home'.$section, array(
+                            'section' => $section,
+                            'results' => $results));
+                }
+                elseif($type == 1) {
+                    return View::make('home.user')
+                        ->nest('childView', 'home'.$section, array(
+                            'section' => $section,
+                            'results' => $results));
+                }
+                else {
+                    return Redirect::to('/tips/'.'用户类型不合法...');
+                }
             }
         }
         else {
@@ -177,7 +190,6 @@ class AdminController extends BaseController {
                     $user = User::find($id);
                     $user->name = Input::get('name');
                     $user->sex = Input::get('sexual');
-//                    $user->email = Input::get('email');
                     $user->password = Hash::make(Input::get('password2'));
                     $user->school = Input::get('school');
                     $user->college = Input::get('college');
@@ -205,6 +217,22 @@ class AdminController extends BaseController {
         else {
             echo  json_encode(array('success' => false, 'message' => '您还未登录...'));
         }
-
+    }
+    /*
+     |----------------------------------------------------------------------
+     |Manage questions
+     |----------------------------------------------------------------------
+     * */
+    public function questionManage($id, $action) {
+        switch($action) {
+            case 'insert' :
+            case 'audit' :
+            case 'edit' :
+                return View::make('home.manage')
+                    ->nest('childView', 'manage/question'.ucfirst($action));
+                break;
+            default :
+                return Redirect::to('/tips/'.'您的请求不合法...');
+        }
     }
 }

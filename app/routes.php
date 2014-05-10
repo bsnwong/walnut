@@ -113,20 +113,40 @@ Route::get('/logout', function() {
  |Route to user page
  |---------------------------------------------------------------------
  * */
-Route::get('/user/{name}/section/{section}', 'AdminController@getUserInfo');
-Route::get('/user/{name}/section', function($name) {
+Route::get('/user/{type}/{name}/{id}/section/{section}', 'AdminController@getUserInfo')->before('guest');
+Route::get('/user/{type}/{name}/{id}/section', function($type, $name, $id) {
     if(Auth::check()){
         return View::make('home.user');
     }
     else {
         return Redirect::to('/tips/'.'您还未登录...');
     }
-});
+})->before('guest');
+/*
+ |----------------------------------------------------------------------
+ |Route to admin manage page
+ |----------------------------------------------------------------------
+ * */
+Route::get('/admin/{type}/{name}/{id}/section/{section}', 'AdminController@getUserInfo')->before('admin');
+Route::get('/admin/{type}/{name}/{id}/section', function($type, $name, $id) {
+    if(Auth::check()){
+        return View::make('home.manage');
+    }
+    else {
+        return Redirect::to('/tips/'.'您还未登录...');
+    }
+})->before('admin');
 /*
  |----------------------------------------------------------------------
  |Route to modify the user info
  |----------------------------------------------------------------------
  * */
 Route::post('/edit/user/{id}', 'AdminController@editUserInfo')->before(array('csrf'));
+/*
+ |----------------------------------------------------------------------
+ |Route to questions manage page
+ |----------------------------------------------------------------------
+ * */
+Route::get('/admin/{id}/question/{action}', 'AdminController@questionManage')->before('admin');
 
 

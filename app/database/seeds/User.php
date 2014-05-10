@@ -7,9 +7,9 @@
  */
 return array(
     array(
-        'username' => 'bsnbsn',
-        'password' => Hash::make('123456789'),
-        'email' => 'bsnwong@gmail.com',
+        'username' => 'admin',
+        'password' => Hash::make('admin'),
+        'email' => 'admin@cute.com',
         'school' => 10,
         'college' => 12,
         'major' => 14
