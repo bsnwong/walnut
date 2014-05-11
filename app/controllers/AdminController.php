@@ -220,10 +220,10 @@ class AdminController extends BaseController {
     }
     /*
      |----------------------------------------------------------------------
-     |Manage questions
+     |Show the manage questions page
      |----------------------------------------------------------------------
      * */
-    public function questionManage($id, $action) {
+    public function questionManagePage($id, $action) {
         switch($action) {
             case 'insert' :
             case 'audit' :
@@ -234,5 +234,26 @@ class AdminController extends BaseController {
             default :
                 return Redirect::to('/tips/'.'您的请求不合法...');
         }
+    }
+    /*
+     |-----------------------------------------------------------------------
+     |Manage the question info, including insert, update, query, and delete
+     |-----------------------------------------------------------------------|
+     * */
+    public function questionManage() {
+        //get the info from the question insert page
+        $course = Input::get('course');
+        $question_type = Input::get('question_type');
+        $question = Input::get('question');
+        $answer_num = Input::get('amount') ? Input::get('amount') : Input::get('ms_amount') ? Input::get('ms_amount') : 0;
+        $answer1 = Input::get('answer1');
+        $answer2 = Input::get('selected_answer');
+        $answer3 = Input::get('blank_type');
+        $answer4 = Input::get('judge_type');
+        $answer5 = Input::get('other_type');
+        $answer_analysis = Input::get('answer_analysis');
+        $score = Input::get('score');
+        $question_level = Input::get('question_level');
+        $time_limit = Input::get('time_limit');
     }
 }

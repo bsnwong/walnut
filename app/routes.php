@@ -147,6 +147,12 @@ Route::post('/edit/user/{id}', 'AdminController@editUserInfo')->before(array('cs
  |Route to questions manage page
  |----------------------------------------------------------------------
  * */
-Route::get('/admin/{id}/question/{action}', 'AdminController@questionManage')->before('admin');
+Route::get('/admin/{id}/question/{action}', 'AdminController@questionManagePage')->before('admin');
+/*
+ |----------------------------------------------------------------------
+ |Route to AdminController to insert the question info
+ |----------------------------------------------------------------------
+ * */
+ROute::post('/admin/question/{action}', 'AdminController@questionManage')->before(array('csrf', 'admin'));
 
 

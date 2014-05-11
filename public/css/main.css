@@ -115,8 +115,9 @@ li {
     padding-bottom: 20px;
 }
 #container {
-    float: right;
-    width: 980px;
+    float: left;
+    margin-left: 20px;
+    width: 930px;
     background-color: #FFE4C4;
     min-height: 600px;
     border-radius: 10px;
