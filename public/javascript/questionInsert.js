@@ -67,33 +67,64 @@ $(document).ready(function() {
     |Show the answer type base on the question type
     |-----------------------------------------------------------------
     * */
-    $('.question_type').click(function() {
-        var type = $(this).val();
-        switch(type) {
-            case '1':
-                $('#answer_type1').show();
-                $('#answer_type1').prevAll().hide();
-                $('#answer_type1').nextAll().hide();
-                break;
-            case '2':
-                $('#answer_type2').show();
-                $('#answer_type2').nextAll().hide();
-                $('#answer_type2').prevAll().hide();
-                break;
-            case '3':
-                $('#answer_type3').show();
-                $('#answer_type3').nextAll().hide();
-                $('#answer_type3').prevAll().hide();
-                break;
-            case '4':
-                $('#answer_type4').show();
-                $('#answer_type4').nextAll().hide();
-                $('#answer_type4').prevAll().hide();
-                break;
-            default :
-                $('#answer_type_other').show();
-                $('#answer_type_other').nextAll().hide();
-                $('#answer_type_other').prevAll().hide();
+    $('.question_type').each(function() {
+        if($(this).attr('checked') == 'checked') {
+            var type = $(this).val();
+            switch(type) {
+                case '1':
+                    $('#answer_type1').show();
+                    $('#answer_type1').prevAll().hide();
+                    $('#answer_type1').nextAll().hide();
+                    break;
+                case '2':
+                    $('#answer_type2').show();
+                    $('#answer_type2').nextAll().hide();
+                    $('#answer_type2').prevAll().hide();
+                    break;
+                case '3':
+                    $('#answer_type3').show();
+                    $('#answer_type3').nextAll().hide();
+                    $('#answer_type3').prevAll().hide();
+                    break;
+                case '4':
+                    $('#answer_type4').show();
+                    $('#answer_type4').nextAll().hide();
+                    $('#answer_type4').prevAll().hide();
+                    break;
+                default :
+                    $('#answer_type_other').show();
+                    $('#answer_type_other').nextAll().hide();
+                    $('#answer_type_other').prevAll().hide();
+            }
         }
+    });
+    $('.question_type').click(function() {
+       var type = $(this).val();
+       switch(type) {
+           case '1':
+               $('#answer_type1').show();
+               $('#answer_type1').prevAll().hide();
+               $('#answer_type1').nextAll().hide();
+               break;
+           case '2':
+               $('#answer_type2').show();
+               $('#answer_type2').nextAll().hide();
+               $('#answer_type2').prevAll().hide();
+               break;
+           case '3':
+               $('#answer_type3').show();
+               $('#answer_type3').nextAll().hide();
+               $('#answer_type3').prevAll().hide();
+               break;
+           case '4':
+               $('#answer_type4').show();
+               $('#answer_type4').nextAll().hide();
+               $('#answer_type4').prevAll().hide();
+               break;
+           default :
+               $('#answer_type_other').show();
+               $('#answer_type_other').nextAll().hide();
+               $('#answer_type_other').prevAll().hide();
+       }
     });
 });

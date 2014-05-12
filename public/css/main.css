@@ -123,3 +123,7 @@ li {
     border-radius: 10px;
     border: 3px dotted #ED3D1A;
 }
+form select, input {
+    border: 1px dotted #ED3D1A;
+    background-color: #FFEFDB;
+}

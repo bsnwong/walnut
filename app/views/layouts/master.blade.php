@@ -7,7 +7,7 @@
 <body>
     <div id="wrap">
         <div id="header">
-            <div id="logo">{{ Form::image('image/logo.png', 'logo', array('width' => 380)) }}</div>
+            <div id="logo">{{ Form::image('image/logo.png', 'logo', array('width' => 380, 'style' => 'background:none;border:none')) }}</div>
             <div>
                 <ul class="nav1">
                     <li class="nav1-li"><a href="/home">主页</a></li>

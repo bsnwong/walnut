@@ -1,0 +1,20 @@
+label {
+    color: #666;
+    font-weight: bolder;
+}
+.submit{
+    float: right;
+    margin: 20px;
+    height: 40px;
+    width: 140px;
+    border: 1px dotted #ED3D1A;
+    background-color: #FFEFDB;
+    transition: background-color 0.3s;
+}
+
+#submit:hover {
+    background-color: #FE8A59;
+    box-shadow: 0px 0px 20px #FFAAAA;
+    transition: background-color 0.3s;
+    /*transition: box-shadow 0.3s;*/
+}

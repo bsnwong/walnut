@@ -1,3 +1,7 @@
+@section('style')
+@parent
+    {{ HTML::style('css/questionInsert.css') }}
+@stop
 <div><h3 id="title">试题录入</h3></div>
 <div id="content">
     {{ Form::open(array('url' => '/admin/question/insert/')) }}
@@ -6,11 +10,11 @@
         {{ Form::label('course', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;科目:') }}
         {{ Form::macro('selectCourse', function() {
         $course = DB::table('Course')
-        ->select('id', 'name')
+        ->select('code', 'name')
         ->get();
         $course_item = array();
         foreach($course as $item) {
-        $course_item[$item->id] = $item->name;
+        $course_item[$item->code] = $item->name;
         }
         return Form::select('course', $course_item);
         }
@@ -35,7 +39,6 @@
         {{ Form::label('other', '其他') }}<br/><strong class="tips" id="type_tip"></strong><br/><br/>
         {{ Form::label('question', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题目') }}<br/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Form::textarea('question', null, array('placeholder' => '请输入题目...')) }}
-        <br/><br/><br/>
         <div>
             {{--Show the answer type base on the question type--}}
             {{--answer for type 1--}}
@@ -57,19 +60,19 @@
             {{--answer for type 3--}}
             <div id="answer_type3" style="display: none">
                 {{ Form::label('blank_type', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;填空题答案') }}<br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Form::text('blank_type', '',  array('placeholder' => '请输入答案...'))}}
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Form::textarea('blank_type', '',  array('placeholder' => '请输入答案，以‘|’作为分隔符...'))}}
             </div>
             {{--answer for type 3--}}
             <div id="answer_type4" style="display: none">
                 {{ Form::label('judge_type', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;判断题答案') }}<br/>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Form::label('right', '对') }}
-                {{ Form::radio('right', 0, null, array('class' => 'input_default', 'name' => 'judge_type')) }}
+                {{ Form::radio('right', 1, null, array('class' => 'input_default', 'name' => 'judge_type')) }}
                 {{ Form::label('wrong', '错') }}
-                {{ Form::radio('wrong', 0, null, array('class' => 'input_default', 'name' => 'judge_type')) }}
+                {{ Form::radio('wrong', 2, null, array('class' => 'input_default', 'name' => 'judge_type')) }}
             </div>
             {{--answer for other type--}}
             <div id="answer_type_other" style="display: none">
-                {{ Form::label('other_type', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其他题型答案') }}<br/>
+                {{ Form::label('other_type', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;答案') }}<br/>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Form::textarea('other_type', '',  array('placeholder' => '请输入答案...'))}}
             </div>
             {{--answer analysis--}}
@@ -88,7 +91,7 @@
         </div>
         <div id="time_limit">
             {{ Form::label('time_limit', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间限制') }}<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Form::selectRange('time_limt', '0', '60', array('name' => 'time_limit')) }}单位：分钟
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Form::selectRange('time_limit', '0', '60', array('name' => 'time_limit')) }}单位：分钟
         </div>
     </div>
 </div>

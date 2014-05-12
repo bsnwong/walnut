@@ -223,14 +223,19 @@ class AdminController extends BaseController {
      |Show the manage questions page
      |----------------------------------------------------------------------
      * */
-    public function questionManagePage($id, $action) {
+    public function questionManagePage($id, $action, $page=1) {
         switch($action) {
             case 'insert' :
             case 'audit' :
             case 'edit' :
+                $data = null;
+                if($action === 'edit') {
+                    $data = Question::where('author', '=', Auth::user()->email)->forPage($page, 15)->get();
+                    $total = Question::where('author', '=', Auth::user()->email)->count();
+                    $page = $total%15 ? (int)($total/15+1) : $total/15;
+                }
                 return View::make('home.manage')
-                    ->nest('childView', 'manage/question'.ucfirst($action));
-                break;
+                    ->nest('childView', 'manage/question'.ucfirst($action), array('data' => $data, 'page' => $page ));
             default :
                 return Redirect::to('/tips/'.'您的请求不合法...');
         }
@@ -242,18 +247,43 @@ class AdminController extends BaseController {
      * */
     public function questionManage() {
         //get the info from the question insert page
-        $course = Input::get('course');
-        $question_type = Input::get('question_type');
-        $question = Input::get('question');
-        $answer_num = Input::get('amount') ? Input::get('amount') : Input::get('ms_amount') ? Input::get('ms_amount') : 0;
-        $answer1 = Input::get('answer1');
-        $answer2 = Input::get('selected_answer');
-        $answer3 = Input::get('blank_type');
-        $answer4 = Input::get('judge_type');
-        $answer5 = Input::get('other_type');
-        $answer_analysis = Input::get('answer_analysis');
-        $score = Input::get('score');
-        $question_level = Input::get('question_level');
-        $time_limit = Input::get('time_limit');
+        $question = new Question;
+        $question->code = md5(Auth::user()->email.time());
+        $question->course_code = Input::get('course');
+        $question->type = Input::get('question_type');
+        $question->question = Input::get('question');
+        $question->answer_num = Input::get('amount') ? Input::get('amount') : Input::get('ms_amount') ? Input::get('ms_amount') : 0;
+        $question->analysis = Input::get('answer_analysis');
+        $question->score = Input::get('score');
+        $question->level = Input::get('question_level');
+        $question->time_limit = Input::get('time_limit');
+        $question->author = Auth::user()->email;
+        //set the default value for the answer
+        switch(Input::get('question_type')) {
+            case '1' ://single selection question
+                $question->answer2 = Input::get('answer1');
+                break;
+            case '2' ://multiple selection question
+                $question->answer4 = implode('|', Input::get('selected_answer'));
+                break;
+            case '3' :
+                $question->answer5 = Input::get('blank_type');
+                break;
+            case '4' ://judge question
+                $question->answer3 = Input::get('judge_type');
+                break;
+            default :
+                $question->answer = Input::get('other_type');
+        }
+        $success = false;
+        DB::transaction(function() use($question, &$success) {
+            $success = $question->save();
+        });
+        if($success) {
+            return Redirect::to('/tips/'.'试题已经录入...');
+        }
+        else {
+            return Redirect::to('/tips/'.'很抱歉，试题录入失败...');
+        }
     }
 }
