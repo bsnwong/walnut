@@ -237,6 +237,20 @@
         <td></td>
     </tr>
     <tr>
+        <td>answer4</td>
+        <td>50</td>
+        <td>varchar</td>
+        <td>多选题答案</td>
+        <td>以‘|’号作为分隔符</td>
+    </tr>
+    <tr>
+        <td>answer5</td>
+        <td>255</td>
+        <td>varchar</td>
+        <td>填空题答案</td>
+        <td>以‘|’号作为分隔符</td>
+    </tr>
+    <tr>
         <td>analysis</td>
         <td></td>
         <td>text</td>
