@@ -223,19 +223,84 @@ class AdminController extends BaseController {
      |Show the manage questions page
      |----------------------------------------------------------------------
      * */
-    public function questionManagePage($id, $action, $page=1) {
+    public function questionManagePage($id, $action, $param=1) {
         switch($action) {
             case 'insert' :
             case 'audit' :
             case 'edit' :
+            case 'search':
+                $page = $param;
                 $data = null;
+                $perPage = 10;
                 if($action === 'edit') {
-                    $data = Question::where('author', '=', Auth::user()->email)->forPage($page, 15)->get();
-                    $total = Question::where('author', '=', Auth::user()->email)->count();
-                    $page = $total%15 ? (int)($total/15+1) : $total/15;
+                    $data = Question::where('author', '=', Auth::user()->email)
+                        ->forPage($page, $perPage)
+                        ->get();
+                    $total = Question::where('author', '=', Auth::user()
+                        ->email)
+                        ->count();
+                    $page = $total%$perPage ? (int)($total/$perPage+1) : $total/$perPage;
+                }
+                if($action === 'search') {
+                    $word = Input::get('word') ? Input::get('word') : Session::get('word');
+                    $question_type = Input::get('question_type') ? Input::get('question_type') : 0;
+                    $search_type = Input::get('search_type');
+                    Session::set('word', $word);
+                    if($search_type == '1') {
+                        $search_type = 'id';
+                    }
+                    elseif($search_type == '2') {
+                        $search_type = 'question';
+                    }
+                    else {
+                        $search_type = Session::get('search_type');
+                    }
+                    Session::set('search_type', $search_type);
+                    if($question_type === 0) {
+                        $data = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                            ->forPage($page, $perPage)
+                            ->get();
+                        $total = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                            ->count();
+                    }
+                    elseif($question_type === '8') {
+                        $question_type = 0;
+                        $data = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                            ->where('type', '=', $question_type)
+                            ->forPage($page, $perPage)
+                            ->get();
+                        $total = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                            ->where('type', '=', $question_type)
+                            ->count();
+                    }
+                    else {
+                        $data = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                            ->where('type', '=', $question_type)
+                            ->forPage($page, $perPage)
+                            ->get();
+                        $total = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                            ->where('type', '=', $question_type)
+                            ->count();
+                    }
+                    $page = $total%$perPage ? (int)($total/$perPage+1) : $total/$perPage;
+                    $action = 'edit';
                 }
                 return View::make('home.manage')
                     ->nest('childView', 'manage/question'.ucfirst($action), array('data' => $data, 'page' => $page ));
+            case 'delete':
+                $params = array('u_email' => Auth::user()->email, 'q_id' => $param);
+                DB::transaction(function() use($params){
+                    $del_id = Question::where('author', '=', $params['u_email'])
+                        ->where('id', '=', $params['q_id'])
+                        ->delete();
+                    if($del_id) {
+                        echo json_encode(array('success' => true, 'message' =>'删除成功...'));
+                    }
+                    else {
+                        echo json_encode(array('success' => false, 'message' =>'删除失败...'));
+                    }
+                });
+                break;
             default :
                 return Redirect::to('/tips/'.'您的请求不合法...');
         }

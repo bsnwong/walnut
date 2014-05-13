@@ -4,6 +4,20 @@
 @stop
 <div><h3 id="title">试题编辑</h3></div>
 <div id="content">
+    <a href="../edit/1" id="show_all">显示所有</a>
+    <div id="search">
+        {{ Form::open(array('url' => '/admin/'.Auth::user()->id.'/question/search/1')) }}
+        {{ Form::label('search_type', '查询类型:') }}
+        {{ Form::select('question_type', array('所有题型', '选择题', '多选题', '填空题', '判断题', '简答题', '计算题', '综合题', '其他')) }}
+        {{ Form::label('search_type', '试题类型') }}
+        {{ Form::radio('search_type', 1, true) }}
+        {{ Form::label('search_type', '试题ID') }}
+        {{ Form::radio('search_type', 2, null) }}
+        {{ Form::label('search_type', '试题内容') }}
+        {{ Form::text('word',null, array('placeholder' => '请输入关键词...')) }}
+        {{ Form::submit('搜索', array('id' => 'submit', 'class' => 'input_default submit')) }}
+        {{ Form::close() }}
+    </div>
     <table id="question_modify">
         <tr>
             <td>试题Id</td>
@@ -40,7 +54,7 @@
             <td>{{ $item->analysis }}</td>
             <td>{{ $item->created_at }}</td>
             <td>{{ $item->updated_at }}</td>
-            <td><a href="javascript:void(0)">删除 | </a><a href="javascript:void(0)">编辑</a></td>
+            <td><a class="action" href="javascript:void(0)" action="/admin/{{ Auth::user()->id}}/question/delete/{{ $item->id }}">删除 | </a><a class="action" href="javascript:void(0)" action="/admin/{{ Auth::user()->id}}/question/delete/{{ $item->id }}">编辑</a></td>
         </tr>
         @endforeach
     </table>
@@ -48,7 +62,7 @@
     <div id="paginator">
         <ul>
             @for($i = 1; $i <= $page; $i++)
-            <a href="/admin/{{ Auth::user()->id }}/question/edit/{{ $i }}">{{ $i }} </a>
+            <a href="{{ $i }}">{{ $i }} </a>
             @endfor
         </ul>
     </div>
