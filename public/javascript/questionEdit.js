@@ -3,7 +3,7 @@
  */
 $(document).ready(function() {
     $('.action').click(function() {
-        var del = confirm('删除该试题');
+        var del = confirm('是否执行此项操作？');
         if(del) {
             $.ajax({
                 type : 'POST',

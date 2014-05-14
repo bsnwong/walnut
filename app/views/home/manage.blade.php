@@ -18,7 +18,7 @@
             <li><a>试题管理</a>
                 <ul>
                     <li><a class="detail" href="/admin/{{ Auth::user()->id }}/question/insert">试题录入</a></li>
-                    <li><a class="detail" href="/admin/{{ Auth::user()->id }}/question/audit">试题审核</a></li>
+                    <li><a class="detail" href="/admin/{{ Auth::user()->id }}/question/audit/1">试题审核</a></li>
                     <li><a class="detail" href="/admin/{{ Auth::user()->id }}/question/edit/1">试题编辑</a></li>
                 </ul>
             </li>

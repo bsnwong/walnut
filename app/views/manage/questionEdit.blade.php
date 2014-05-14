@@ -27,34 +27,74 @@
             <td>解析</td>
             <td>创建时间</td>
             <td>最后修改时间</td>
+            <td>审核状态</td>
             <td>操作</td>
         </tr>
         @foreach($data as $item)
         <tr>
             <td>{{ $item->id }}</td>
-            <td>{{ $item->type }}</td>
+            <td>
+                <?php
+                switch($item->type) {
+                    case 0:
+                        echo '其他类型';
+                        break;
+                    case 1:
+                        echo '选择题';
+                        break;
+                    case 2:
+                        echo '多选题';
+                        break;
+                    case 3:
+                        echo '判断题';
+                        break;
+                    case 4:
+                        echo '简答题';
+                        break;
+                    case 5:
+                        echo '计算题';
+                        break;
+                    case 6:
+                        echo '综合题';
+                        break;
+                    default:
+                        echo '其他类型';
+                }
+                ?>
+            </td>
             <td>{{ $item->question }}</td>
             <td>
                 @if($item->type == '1')
-                    {{ $item->answer2 }}
+                {{ $item->answer2 }}
                 @endif
                 @if($item->type == '2')
-                    {{ $item->answer4 }}
+                {{ $item->answer4 }}
                 @endif
                 @if($item->type == '3')
-                    {{ $item->answer5 }}
+                @if($item->answer3)
+                对
+                @else
+                错
+                @endif
                 @endif
                 @if($item->type == '4')
-                    {{ $item->answer3 }}
+                {{ $item->answer3 }}
                 @endif
                 @if($item->type == '0')
-                    {{ $item->answer }}
+                {{ $item->answer }}
                 @endif
             </td>
             <td>{{ $item->analysis }}</td>
             <td>{{ $item->created_at }}</td>
             <td>{{ $item->updated_at }}</td>
-            <td><a class="action" href="javascript:void(0)" action="/admin/{{ Auth::user()->id}}/question/delete/{{ $item->id }}">删除 | </a><a class="action" href="javascript:void(0)" action="/admin/{{ Auth::user()->id}}/question/delete/{{ $item->id }}">编辑</a></td>
+            <td>
+                @if($item->allow)
+                通过
+                @else
+                待审核
+                @endif
+            </td>
+            <td><a class="action" href="javascript:void(0)" action="/admin/{{ Auth::user()->id}}/question/delete/{{ $item->id }}">删除 | </a><a  href="../modify/{{ $item->id }}" >编辑  </a></td>
         </tr>
         @endforeach
     </table>

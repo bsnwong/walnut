@@ -144,6 +144,21 @@ Route::get('/admin/{type}/{name}/{id}/section', function($type, $name, $id) {
 Route::post('/edit/user/{id}', 'AdminController@editUserInfo')->before(array('csrf'));
 /*
  |----------------------------------------------------------------------
+ |Route to denote question page
+ |----------------------------------------------------------------------
+ * */
+Route::get('/user/action/{action}', function($action) {
+    return View::make('home.user')->nest('childView', 'home.'.$action);
+})->before('guest');
+Route::post('/user/action/{action}/{param?}', 'AdminController@denoteQuestion')->before('guest');
+/*
+ |----------------------------------------------------------------------
+ |Route to display the denote questions' status
+ |----------------------------------------------------------------------
+ * */
+Route::get('/user/denote/{status}', 'AdminController@showDenote');
+/*
+ |----------------------------------------------------------------------
  |Route to questions manage page
  |----------------------------------------------------------------------
  * */
@@ -154,7 +169,7 @@ Route::post('/admin/{id}/question/{action}/{page?}/', 'AdminController@questionM
  |Route to AdminController to insert the question info
  |----------------------------------------------------------------------
  * */
-Route::post('/admin/question/{action}', 'AdminController@questionManage')->before(array('csrf', 'admin'));
+Route::post('/admin/question/{action}/{param?}', 'AdminController@questionManage')->before(array('csrf', 'admin'));
 /*
  |----------------------------------------------------------------------
  |Route to AdminController to paginate the question info

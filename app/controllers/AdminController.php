@@ -227,24 +227,38 @@ class AdminController extends BaseController {
         switch($action) {
             case 'insert' :
             case 'audit' :
+            case 'modify' :
             case 'edit' :
             case 'search':
                 $page = $param;
                 $data = null;
                 $perPage = 10;
-                if($action === 'edit') {
-                    $data = Question::where('author', '=', Auth::user()->email)
-                        ->forPage($page, $perPage)
-                        ->get();
-                    $total = Question::where('author', '=', Auth::user()
-                        ->email)
-                        ->count();
+                if($action === 'edit' || $action === 'audit' ) {
+                    if($action === 'edit') {
+                        $data = Question::where('author', '=', Auth::user()->email)
+                            ->forPage($page, $perPage)
+                            ->get();
+                        $total = Question::where('author', '=', Auth::user()
+                            ->email)
+                            ->count();
+                    }
+                    elseif($action === 'audit') {
+                        $data = Question::where('author', '=', Auth::user()->email)
+                            ->where('allow', '=', 0)
+                            ->forPage($page, $perPage)
+                            ->get();
+                        $total = Question::where('author', '=', Auth::user()
+                            ->email)
+                            ->where('allow', '=', 0)
+                            ->count();
+                    }
                     $page = $total%$perPage ? (int)($total/$perPage+1) : $total/$perPage;
                 }
                 if($action === 'search') {
                     $word = Input::get('word') ? Input::get('word') : Session::get('word');
                     $question_type = Input::get('question_type') ? Input::get('question_type') : 0;
                     $search_type = Input::get('search_type');
+                    $from = Input::get('from');
                     Session::set('word', $word);
                     if($search_type == '1') {
                         $search_type = 'id';
@@ -256,37 +270,78 @@ class AdminController extends BaseController {
                         $search_type = Session::get('search_type');
                     }
                     Session::set('search_type', $search_type);
-                    if($question_type === 0) {
-                        $data = Question::where($search_type, 'LIKE', '%'.$word.'%')
-                            ->forPage($page, $perPage)
-                            ->get();
-                        $total = Question::where($search_type, 'LIKE', '%'.$word.'%')
-                            ->count();
+                    if($action === 'search' && $from !== 'audit') {
+                        if($question_type === 0) {
+                            $data = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                                ->forPage($page, $perPage)
+                                ->get();
+                            $total = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                                ->count();
+                        }
+                        elseif($question_type === '8') {
+                            $question_type = 0;
+                            $data = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                                ->where('type', '=', $question_type)
+                                ->forPage($page, $perPage)
+                                ->get();
+                            $total = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                                ->where('type', '=', $question_type)
+                                ->count();
+                        }
+                        else {
+                            $data = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                                ->where('type', '=', $question_type)
+                                ->forPage($page, $perPage)
+                                ->get();
+                            $total = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                                ->where('type', '=', $question_type)
+                                ->count();
+                        }
+
                     }
-                    elseif($question_type === '8') {
-                        $question_type = 0;
-                        $data = Question::where($search_type, 'LIKE', '%'.$word.'%')
-                            ->where('type', '=', $question_type)
-                            ->forPage($page, $perPage)
-                            ->get();
-                        $total = Question::where($search_type, 'LIKE', '%'.$word.'%')
-                            ->where('type', '=', $question_type)
-                            ->count();
-                    }
-                    else {
-                        $data = Question::where($search_type, 'LIKE', '%'.$word.'%')
-                            ->where('type', '=', $question_type)
-                            ->forPage($page, $perPage)
-                            ->get();
-                        $total = Question::where($search_type, 'LIKE', '%'.$word.'%')
-                            ->where('type', '=', $question_type)
-                            ->count();
+                    elseif($from === 'audit') {
+                        if($question_type === 0) {
+                            $data = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                                ->where('allow', '=', 0)
+                                ->forPage($page, $perPage)
+                                ->get();
+                            $total = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                                ->where('allow', '=', 0)
+                                ->count();
+                        }
+                        elseif($question_type === '8') {
+                            $question_type = 0;
+                            $data = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                                ->where('type', '=', $question_type)
+                                ->where('allow', '=', 0)
+                                ->forPage($page, $perPage)
+                                ->get();
+                            $total = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                                ->where('type', '=', $question_type)
+                                ->where('allow', '=', 0)
+                                ->count();
+                        }
+                        else {
+                            $data = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                                ->where('type', '=', $question_type)
+                                ->where('allow', '=', 0)
+                                ->forPage($page, $perPage)
+                                ->get();
+                            $total = Question::where($search_type, 'LIKE', '%'.$word.'%')
+                                ->where('type', '=', $question_type)
+                                ->where('allow', '=', 0)
+                                ->count();
+                        }
                     }
                     $page = $total%$perPage ? (int)($total/$perPage+1) : $total/$perPage;
                     $action = 'edit';
                 }
+                if($action === 'modify') {
+                    $id = $param;
+                    $data = Question::find($id);
+                }
                 return View::make('home.manage')
-                    ->nest('childView', 'manage/question'.ucfirst($action), array('data' => $data, 'page' => $page ));
+                    ->nest('childView', 'manage.question'.ucfirst($action), array('data' => $data, 'page' => $page ));
             case 'delete':
                 $params = array('u_email' => Auth::user()->email, 'q_id' => $param);
                 DB::transaction(function() use($params){
@@ -301,6 +356,20 @@ class AdminController extends BaseController {
                     }
                 });
                 break;
+            case 'pass':
+                $params = array('u_email' => Auth::user()->email, 'q_id' => $param);
+                DB::transaction(function() use($params){
+                    $pass_id = Question::find($params['q_id']);
+                    $pass_id->allow = 1;
+                    $pass = $pass_id->update();
+                    if($pass) {
+                        echo json_encode(array('success' => true, 'message' =>'审核通过...'));
+                    }
+                    else {
+                        echo json_encode(array('success' => false, 'message' =>'操作失败...'));
+                    }
+                });
+                break;
             default :
                 return Redirect::to('/tips/'.'您的请求不合法...');
         }
@@ -308,11 +377,17 @@ class AdminController extends BaseController {
     /*
      |-----------------------------------------------------------------------
      |Manage the question info, including insert, update, query, and delete
-     |-----------------------------------------------------------------------|
+     |-----------------------------------------------------------------------
      * */
-    public function questionManage() {
+    public function questionManage($action, $param = null) {
         //get the info from the question insert page
-        $question = new Question;
+        if($action == 'insert') {
+            $question = new Question;
+        }
+        elseif($action == 'modify') {
+            $q_id = $param;
+            $question = Question::find($q_id);
+        }
         $question->code = md5(Auth::user()->email.time());
         $question->course_code = Input::get('course');
         $question->type = Input::get('question_type');
@@ -323,6 +398,7 @@ class AdminController extends BaseController {
         $question->level = Input::get('question_level');
         $question->time_limit = Input::get('time_limit');
         $question->author = Auth::user()->email;
+        $question->allow = 1;
         //set the default value for the answer
         switch(Input::get('question_type')) {
             case '1' ://single selection question
@@ -341,14 +417,108 @@ class AdminController extends BaseController {
                 $question->answer = Input::get('other_type');
         }
         $success = false;
-        DB::transaction(function() use($question, &$success) {
-            $success = $question->save();
+        $msg = '操作成功...';
+        DB::transaction(function() use($question, &$success, $action, &$msg) {
+            if($action == 'insert') {
+                $success = $question->save();
+                $msg = '试题已经录入...';
+            }
+            elseif($action == 'modify') {
+                $success = $question->update();
+                $msg = '试题已更新...';
+            }
         });
         if($success) {
-            return Redirect::to('/tips/'.'试题已经录入...');
+            return Redirect::to('/tips/'.$msg);
         }
         else {
             return Redirect::to('/tips/'.'很抱歉，试题录入失败...');
+        }
+    }
+    /*
+     |-----------------------------------------------------------------------
+     |Normal user denote question to database
+     |-----------------------------------------------------------------------
+     */
+    public function denoteQuestion($action, $param = null) {
+        //get the info from the question insert page
+        if($action == 'denote') {
+            $question = new Question;
+        }
+        elseif($action == 'modify') {
+            $q_id = $param;
+            $question = Question::find($q_id);
+        }
+        $question->code = md5(Auth::user()->email.time());
+        $question->course_code = Input::get('course');
+        $question->type = Input::get('question_type');
+        $question->question = Input::get('question');
+        $question->answer_num = Input::get('amount') ? Input::get('amount') : Input::get('ms_amount') ? Input::get('ms_amount') : 0;
+        $question->analysis = Input::get('answer_analysis');
+        $question->score = Input::get('score');
+        $question->level = Input::get('question_level');
+        $question->time_limit = Input::get('time_limit');
+        $question->author = Auth::user()->email;
+        $question->allow = 0;
+        //set the default value for the answer
+        switch(Input::get('question_type')) {
+            case '1' ://single selection question
+                $question->answer2 = Input::get('answer1');
+                break;
+            case '2' ://multiple selection question
+                $question->answer4 = implode('|', Input::get('selected_answer'));
+                break;
+            case '3' :
+                $question->answer5 = Input::get('blank_type');
+                break;
+            case '4' ://judge question
+                $question->answer3 = Input::get('judge_type');
+                break;
+            default :
+                $question->answer = Input::get('other_type');
+        }
+        $success = false;
+        $msg = '操作成功...';
+        DB::transaction(function() use($question, &$success, $action, &$msg) {
+            if($action == 'denote') {
+                $success = $question->save();
+                $msg = '试题已经录入...';
+            }
+            elseif($action == 'modify') {
+                $success = $question->update();
+                $msg = '试题已更新...';
+            }
+        });
+        if($success) {
+            return Redirect::to('/tips/'.$msg);
+        }
+        else {
+            return Redirect::to('/tips/'.'很抱歉，试题录入失败...');
+        }
+    }
+    /*
+     |-----------------------------------------------------------------------
+     |Show the denoted question of current user
+     |-----------------------------------------------------------------------
+     * */
+    public function showDenote($status) {
+        switch($status) {
+            case 'pass' :
+            case 'wait' :
+                if($status === 'pass') {
+                    $data = Question::where('author', '=', Auth::user()->email)
+                        ->where('allow', '=', '1')
+                        ->get();
+                }
+                if($status === 'wait') {
+                    $data = Question::where('author', '=', Auth::user()->email)
+                        ->where('allow', '=', '0')
+                        ->get();
+                }
+                return View::make('home.user')
+                    ->nest('childView', 'home.pass', array('data' => $data));
+            default :
+                return Redirect::to('/tips/'.'您的请求不合法...');
         }
     }
 }

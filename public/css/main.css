@@ -127,3 +127,7 @@ form select, input {
     border: 1px dotted #ED3D1A;
     background-color: #FFEFDB;
 }
+label {
+    color: #666;
+    font-weight: bolder;
+}

@@ -300,6 +300,13 @@
         <td>单位为分钟，默认为0，即无时间限制</td>
     </tr>
     <tr>
+        <td>allow</td>
+        <td></td>
+        <td>enum</td>
+        <td>审核状态</td>
+        <td>待审核：0， 已通过：1</td>
+    </tr>
+    <tr>
         <td>created_at</td>
         <td></td>
         <td>date</td>
