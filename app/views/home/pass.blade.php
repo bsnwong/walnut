@@ -17,7 +17,35 @@
         @foreach($data as $item)
         <tr>
             <td>{{ $item->id }}</td>
-            <td>{{ $item->type }}</td>
+            <td>
+                <?php
+                switch($item->type) {
+                    case 0:
+                        echo '其他类型';
+                        break;
+                    case 1:
+                        echo '选择题';
+                        break;
+                    case 2:
+                        echo '多选题';
+                        break;
+                    case 3:
+                        echo '判断题';
+                        break;
+                    case 4:
+                        echo '简答题';
+                        break;
+                    case 5:
+                        echo '计算题';
+                        break;
+                    case 6:
+                        echo '综合题';
+                        break;
+                    default:
+                        echo '其他类型';
+                }
+                ?>
+            </td>
             <td>{{ $item->question }}</td>
             <td>
                 @if($item->type == '1')

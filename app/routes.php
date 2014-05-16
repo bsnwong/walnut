@@ -116,7 +116,7 @@ Route::get('/logout', function() {
 Route::get('/user/{type}/{name}/{id}/section/{section}', 'AdminController@getUserInfo')->before('guest');
 Route::get('/user/{type}/{name}/{id}/section', function($type, $name, $id) {
     if(Auth::check()){
-        return View::make('home.user');
+        return View::make('home.user')->nest('childView', 'home.chart');
     }
     else {
         return Redirect::to('/tips/'.'您还未登录...');
@@ -178,5 +178,28 @@ Route::post('/admin/question/{action}/{param?}', 'AdminController@questionManage
 Route::get('/admin/{id}/question/edit', function() {
     echo Input::get('page');
 })->before('admin');
+/*
+ |----------------------------------------------------------------------
+ |Route to show the question select page
+ |----------------------------------------------------------------------
+ * */
+Route::get('/user/test/{type}', function($type) {
+    switch($type) {
+        case 'standard':
+            return View::make('home.user')
+                ->nest('childView', 'manage.standardQuestion');
+        case 'diy':
+            return View::make('home.user')
+                ->nest('childView', 'manage.diyQuestion');
+        }
+})->before('guest');
+/*
+ |----------------------------------------------------------------------
+ |Route to HomeCOntroller to show the selected question page
+ |----------------------------------------------------------------------
+ * */
+Route::post('/user/test/{type}', 'HomeController@questionSelected')->before(array('csrf', 'guest'));
+
+
 
 

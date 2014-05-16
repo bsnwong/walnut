@@ -388,11 +388,17 @@ class AdminController extends BaseController {
             $q_id = $param;
             $question = Question::find($q_id);
         }
-        $question->code = md5(Auth::user()->email.time());
         $question->course_code = Input::get('course');
         $question->type = Input::get('question_type');
         $question->question = Input::get('question');
-        $question->answer_num = Input::get('amount') ? Input::get('amount') : Input::get('ms_amount') ? Input::get('ms_amount') : 0;
+        if(Input::get('question_type') == '1') {
+            $question->answer_num = Input::get('amount');
+            $question->select_options = Input::get('select_options');
+        }
+        else {
+            $question->answer_num = Input::get('ms_amount');
+            $question->select_options = Input::get('m_select_options');
+        }
         $question->analysis = Input::get('answer_analysis');
         $question->score = Input::get('score');
         $question->level = Input::get('question_level');
@@ -449,11 +455,16 @@ class AdminController extends BaseController {
             $q_id = $param;
             $question = Question::find($q_id);
         }
-        $question->code = md5(Auth::user()->email.time());
         $question->course_code = Input::get('course');
         $question->type = Input::get('question_type');
         $question->question = Input::get('question');
-        $question->answer_num = Input::get('amount') ? Input::get('amount') : Input::get('ms_amount') ? Input::get('ms_amount') : 0;
+        if(Input::get('question_type') == '1') {
+            $question->answer_num = Input::get('amount');
+        }
+        else {
+            $question->answer_num = Input::get('ms_amount');
+        }
+        $question->select_options = Input::get('select_options');
         $question->analysis = Input::get('answer_analysis');
         $question->score = Input::get('score');
         $question->level = Input::get('question_level');
