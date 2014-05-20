@@ -427,6 +427,20 @@
         <td></td>
     </tr>
     <tr>
+        <td>score</td>
+        <td></td>
+        <td>tinyint</td>
+        <td>得分</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>read</td>
+        <td></td>
+        <td>enum</td>
+        <td>是否已经阅卷（0：否，1：是）</td>
+        <td></td>
+    </tr>
+    <tr>
         <td>created_at</td>
         <td></td>
         <td>date</td>
