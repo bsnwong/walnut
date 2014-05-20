@@ -399,11 +399,32 @@
         <td>外键(Question:id)</td>
     </tr>
     <tr>
+        <td>q_type</td>
+        <td></td>
+        <td>char</td>
+        <td>试题类型</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>answer</td>
+        <td></td>
+        <td>text</td>
+        <td>答案</td>
+        <td></td>
+    </tr>
+    <tr>
         <td>u_email</td>
         <td></td>
         <td>varchar</td>
         <td>测试者email</td>
         <td>外键(User:email)</td>
+    </tr>
+    <tr>
+        <td>nth</td>
+        <td></td>
+        <td>bigint</td>
+        <td>测试次数</td>
+        <td></td>
     </tr>
     <tr>
         <td>created_at</td>
