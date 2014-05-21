@@ -1,0 +1,24 @@
+#read {
+    border: 2px dotted #ED3D1A;
+    margin: 0 auto;
+    border-radius: 10px;
+    width: 900px;
+    table-layout: fixed;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    text-align: center;
+}
+#read tr:nth-child(even) {
+    background-color: #FFAF7A;
+}
+#read tr:nth-child(odd) {
+    background-color: #FF8C69;
+}
+#read tr:hover {
+    background-color: #FF6633;
+    transition: background-color 0.5s;
+}
+#submit {
+    margin: 10px;
+    margin-left: 850px;
+}

@@ -20,8 +20,11 @@
                     <li><a class="detail" href="/admin/{{ Auth::user()->id }}/question/insert">试题录入</a></li>
                     <li><a class="detail" href="/admin/{{ Auth::user()->id }}/question/audit/1">试题审核</a></li>
                     <li><a class="detail" href="/admin/{{ Auth::user()->id }}/question/edit/1">试题编辑</a></li>
+                    <li><a class="detail" href="/admin/{{ Auth::user()->id }}/question/read">阅卷</a></li>
                 </ul>
             </li>
+            <li>添加组织信息</li>
+            <li>添加学科信息</li>
             <li>测试分析
                 <ul>
                     <li>test</li>

@@ -1,8 +1,4 @@
 @extends('layouts.master')
-@section('script')
-    {{ HTML::script('javascript/highcharts/js/highcharts.js') }}
-    {{ HTML::script('javascript/user.js') }}
-@stop
 
 @section('style')
     {{ HTML::style('css/user.css') }}
@@ -31,7 +27,7 @@
             </li>
             <li>测试分析
                 <ul>
-                    <li>个人情况</li>
+                    <li><a href="/user/action/chart">个人情况</a></li>
                     <li>所在群体情况</li>
                 </ul>
             </li>
@@ -43,4 +39,8 @@
             {{ $childView }}
         @endif
     </div>
+@stop
+@section('script')
+{{ HTML::script('javascript/highcharts/js/highcharts.js') }}
+{{ HTML::script('javascript/user.js') }}
 @stop

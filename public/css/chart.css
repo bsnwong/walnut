@@ -1,0 +1,17 @@
+#chart_options{
+    float: right;
+}
+#chart_options li {
+    display: inline-block;
+    min-width: 90px;
+    text-align: center;
+    margin-right: 2px;
+    background-color: #FFAAAA;
+    border-radius: 5px;
+    height: 30px;
+    line-height: 30px;
+}
+#chart_options li:hover {
+    background-color: #FF8C69;
+    transition: background-color 0.4s;
+}

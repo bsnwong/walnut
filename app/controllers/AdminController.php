@@ -243,13 +243,10 @@ class AdminController extends BaseController {
                             ->count();
                     }
                     elseif($action === 'audit') {
-                        $data = Question::where('author', '=', Auth::user()->email)
-                            ->where('allow', '=', 0)
+                        $data = Question::where('allow', '=', 0)
                             ->forPage($page, $perPage)
                             ->get();
-                        $total = Question::where('author', '=', Auth::user()
-                            ->email)
-                            ->where('allow', '=', 0)
+                        $total = Question::where('allow', '=', 0)
                             ->count();
                     }
                     $page = $total%$perPage ? (int)($total/$perPage+1) : $total/$perPage;
@@ -341,7 +338,14 @@ class AdminController extends BaseController {
                     $data = Question::find($id);
                 }
                 return View::make('home.manage')
-                    ->nest('childView', 'manage.question'.ucfirst($action), array('data' => $data, 'page' => $page ));
+                    ->nest(
+                        'childView',
+                        'manage.question'.ucfirst($action),
+                        array(
+                            'data' => $data,
+                            'page' => $page
+                        )
+                    );
             case 'delete':
                 $params = array('u_email' => Auth::user()->email, 'q_id' => $param);
                 DB::transaction(function() use($params){
@@ -370,9 +374,76 @@ class AdminController extends BaseController {
                     }
                 });
                 break;
-            default :
+            case 'read' :
+                $page = $param;
+                $perPage = 20;
+                $users = User::
+                    where('school', '=', Auth::user()->school)
+                    ->where('college', '=', Auth::user()->college)
+                    ->where('major', '=', Auth::user()->major)
+                    ->distinct('email')
+                    ->get();
+                $results = array();
+                $total = 0;
+                foreach($users as $index => $user) {
+                    $user_id = $user->id;
+                    $result = User::find($user_id)
+                        ->result()
+                        ->where('read', '=', 0)
+                        ->whereNotIn('q_type', array('1', '2', '3', '4'), 'and')
+                        ->get();
+                    $count = User::find($user_id)
+                        ->result()
+                        ->where('read', '=', 0)
+                        ->whereNotIn('q_type', array('1', '2', '3', '4'), 'and')
+                        ->count();
+                    $total += $count;
+                    foreach($result as $k => $v) {
+                        $question = Result::find($v->id)
+                            ->question()
+                            ->first();
+                        $results[$user_id][$v->nth][] = array(
+                            'question' => $question,
+                            'result' => $v
+                        );
+                    }
+                }
+                return View::make('home.manage')
+                    ->nest(
+                        'childView',
+                        'home.read',
+                        array(
+                            'data' => $results,
+                            'total' => $total,
+                            'perpage' => 20
+                        )
+                    );
+                break;
+            case 'postScore':
+                $score = Input::get('score');
+                $result2 = Input::get('result');
+                DB::transaction(function() use($score, $result2){
+                    foreach($score as $index => $value) {
+                        if($value >= 0) {
+                            $r = Result::find($result2[$index]);
+                            $r->score = $value;
+                            $r->read = 1;
+                            $r->update();
+                        }
+                    }
+                });
+                break;
+            default:
                 return Redirect::to('/tips/'.'您的请求不合法...');
         }
+    }
+    /*
+     |----------------------------------------------------------------------
+     |Read the result and post the score
+     |----------------------------------------------------------------------
+     * */
+    public static function postScore() {
+
     }
     /*
      |-----------------------------------------------------------------------
@@ -413,8 +484,13 @@ class AdminController extends BaseController {
             case '2' ://multiple selection question
                 $question->answer4 = implode('|', Input::get('selected_answer'));
                 break;
-            case '3' :
-                $question->answer5 = Input::get('blank_type');
+            case '3' ://blank
+                $answer5 = explode('|', Input::get('blank_type'));
+                $new_answer5 = array();
+                foreach($answer5 as $item) {
+                    $new_answer5[] = trim($item);
+                }
+                $question->answer5 = implode('|', $new_answer5);
                 break;
             case '4' ://judge question
                 $question->answer3 = Input::get('judge_type');

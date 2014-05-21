@@ -151,6 +151,7 @@ Route::get('/user/action/{action}', function($action) {
     return View::make('home.user')->nest('childView', 'home.'.$action);
 })->before('guest');
 Route::post('/user/action/{action}/{param?}', 'AdminController@denoteQuestion')->before('guest');
+Route::post('/user/{action}', 'HomeController@stastic')->before('guest');
 /*
  |----------------------------------------------------------------------
  |Route to display the denote questions' status
