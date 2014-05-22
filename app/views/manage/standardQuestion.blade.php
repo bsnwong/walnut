@@ -8,11 +8,11 @@
     {{ Form::label('course', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;科目:') }}
     {{ Form::macro('selectCourse', function() {
     $course = DB::table('Course')
-    ->select('code', 'name')
+    ->select('id', 'name')
     ->get();
     $course_item = array();
     foreach($course as $item) {
-    $course_item[$item->code] = $item->name;
+    $course_item[$item->id] = $item->name;
     }
     return Form::select('course', $course_item);
     }
@@ -23,6 +23,7 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Form::submit('提交', array('id' => 'submit', 'class' => 'input_default submit')) }}
     {{ Form::close() }}
     {{ Form::open(array('url' => '/user/test/post', 'id' => 'form2')) }}
+    {{ Form::hidden('c_id', null,array('id' => 'c_id')) }}
     <div id="time_div">
         <label>剩余时间：<strong id="time"></strong>分钟</label>
     </div>

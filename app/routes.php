@@ -181,6 +181,17 @@ Route::get('/admin/{id}/question/edit', function() {
 })->before('admin');
 /*
  |----------------------------------------------------------------------
+ |Route to AdminController to insert the info of organization and course
+ |----------------------------------------------------------------------
+ * */
+Route::get('/admin/action/{action}',function($action) {
+    return View::make('home.manage')
+        ->nest('childView', 'manage.'.$action);
+})->before('admin');
+Route::post('/admin/action/{action}', 'AdminController@infoInsert')->before('admin');
+
+/*
+ |----------------------------------------------------------------------
  |Route to show the question select page
  |----------------------------------------------------------------------
  * */

@@ -4,6 +4,19 @@
 @stop
 <div><h3 id="title">测试分析</h3></div>
 <div id="content">
+    {{ Form::label('course', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;科目:') }}
+    {{ Form::macro('selectCourse', function() {
+    $course = DB::table('Course')
+    ->select('id', 'name')
+    ->get();
+    $course_item = array();
+    foreach($course as $item) {
+    $course_item[$item->id] = $item->name;
+    }
+    return Form::select('course', $course_item);
+    }
+    ) }}
+    *{{ Form::selectCourse() }}
     <div id="chart_options">
         <ul>
             <li class="chart_options" value="line"><a href="javascript:void(0)">折线图</a></li>

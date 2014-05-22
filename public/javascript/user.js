@@ -3,17 +3,21 @@
  */
 $(function () {
     var json;
-    $.ajax({
-        type: 'POST',
-        url: '/user/chart',
-        success: function(msg) {
-            msg = JSON.parse(msg);
-            json = msg;
-            $('#chart').highcharts(json);
-        }
-    });
     $('.chart_options').click(function() {
         json.chart.type = $(this).attr('value');
         $('#chart').highcharts(json);
     });
+    $('#course').change(function() {
+        $.ajax({
+            type: 'POST',
+            url: '/user/chart',
+            data: {'c_id':$('#course').val()},
+            success: function(msg) {
+                msg = JSON.parse(msg);
+                json = msg;
+                $('#chart').highcharts(json);
+            }
+        });
+    });
+    $('#course').change();
 });

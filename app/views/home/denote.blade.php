@@ -10,11 +10,11 @@
         {{ Form::label('course', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;科目:') }}
         {{ Form::macro('selectCourse', function() {
         $course = DB::table('Course')
-        ->select('code', 'name')
+        ->select('id', 'name')
         ->get();
         $course_item = array();
         foreach($course as $item) {
-        $course_item[$item->code] = $item->name;
+        $course_item[$item->id] = $item->name;
         }
         return Form::select('course', $course_item);
         }

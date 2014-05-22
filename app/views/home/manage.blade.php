@@ -23,8 +23,8 @@
                     <li><a class="detail" href="/admin/{{ Auth::user()->id }}/question/read">阅卷</a></li>
                 </ul>
             </li>
-            <li>添加组织信息</li>
-            <li>添加学科信息</li>
+            <li><a href="/admin/action/orginsert">添加组织信息</a></li>
+            <li><a href="/admin/action/courseinsert">添加学科信息</a></li>
             <li>测试分析
                 <ul>
                     <li>test</li>

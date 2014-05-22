@@ -70,56 +70,56 @@ class HomeController extends BaseController {
                 $select = Question::where('type', '=', 1)
                     ->where('allow', '=', 1)
                     ->where('level', '=', Input::get('question_level'))
-                    ->where('course_code', '=', Input::get('course'))
+                    ->where('c_id', '=', Input::get('course'))
                     ->orderBy(DB::raw('RAND()'))
                     ->limit(5)
                     ->get();
                 $ms_select = Question::where('type', '=', 2)
                     ->where('allow', '=', 1)
                     ->where('level', '=', Input::get('question_level'))
-                    ->where('course_code', '=', Input::get('course'))
+                    ->where('c_id', '=', Input::get('course'))
                     ->orderBy(DB::raw('RAND()'))
                     ->limit(5)
                     ->get();
                 $blank = Question::where('type', '=', 3)
                     ->where('allow', '=', 1)
                     ->where('level', '=', Input::get('question_level'))
-                    ->where('course_code', '=', Input::get('course'))
+                    ->where('c_id', '=', Input::get('course'))
                     ->orderBy(DB::raw('RAND()'))
                     ->limit(5)
                     ->get();
                 $judge = Question::where('type', '=', 4)
                     ->where('allow', '=', 1)
                     ->where('level', '=', Input::get('question_level'))
-                    ->where('course_code', '=', Input::get('course'))
+                    ->where('c_id', '=', Input::get('course'))
                     ->orderBy(DB::raw('RAND()'))
                     ->limit(5)
                     ->get();
                 $qanda = Question::where('type', '=', 5)
                     ->where('allow', '=', 1)
                     ->where('level', '=', Input::get('question_level'))
-                    ->where('course_code', '=', Input::get('course'))
+                    ->where('c_id', '=', Input::get('course'))
                     ->orderBy(DB::raw('RAND()'))
                     ->limit(2)
                     ->get();
                 $calculate = Question::where('type', '=', 6)
                     ->where('allow', '=', 1)
                     ->where('level', '=', Input::get('question_level'))
-                    ->where('course_code', '=', Input::get('course'))
+                    ->where('c_id', '=', Input::get('course'))
                     ->orderBy(DB::raw('RAND()'))
                     ->limit(2)
                     ->get();
                 $comprehensive = Question::where('type', '=', 7)
                     ->where('allow', '=', 1)
                     ->where('level', '=', Input::get('question_level'))
-                    ->where('course_code', '=', Input::get('course'))
+                    ->where('c_id', '=', Input::get('course'))
                     ->orderBy(DB::raw('RAND()'))
                     ->limit(1)
                     ->get();
                 $other = Question::where('type', '=', 0)
                     ->where('allow', '=', 1)
                     ->where('level', '=', Input::get('question_level'))
-                    ->where('course_code', '=', Input::get('course'))
+                    ->where('c_id', '=', Input::get('course'))
                     ->orderBy(DB::raw('RAND()'))
                     ->limit(1)
                     ->get();
@@ -220,6 +220,7 @@ class HomeController extends BaseController {
                             $r->q_id = $v['q_id'];
                             $r->q_type = $v['q_type'];
                             $r->answer = $v['answer'] ? $v['answer'] : '';
+                            $r->c_id = Input::get('c_id');
                             $r->u_email = Auth::user()->email;
                             $r->nth = $nth;
                             if(in_array($v['q_type'], array('1', '2', '3', '4'))) {
@@ -271,6 +272,7 @@ class HomeController extends BaseController {
                 $data = Result::select(array(DB::raw('SUM(score) as total'), 'nth'))
                     ->where('u_email', '=', Auth::user()->email)
                     ->where('read', '=', 1)
+                    ->where('c_id', '=', Input::get('c_id'))
                     ->groupBy('nth')
                     ->get();
                 $score = array();

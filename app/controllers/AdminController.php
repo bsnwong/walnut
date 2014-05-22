@@ -459,7 +459,7 @@ class AdminController extends BaseController {
             $q_id = $param;
             $question = Question::find($q_id);
         }
-        $question->course_code = Input::get('course');
+        $question->c_id = Input::get('course');
         $question->type = Input::get('question_type');
         $question->question = Input::get('question');
         if(Input::get('question_type') == '1') {
@@ -531,7 +531,7 @@ class AdminController extends BaseController {
             $q_id = $param;
             $question = Question::find($q_id);
         }
-        $question->course_code = Input::get('course');
+        $question->c_id = Input::get('course');
         $question->type = Input::get('question_type');
         $question->question = Input::get('question');
         if(Input::get('question_type') == '1') {
@@ -606,6 +606,57 @@ class AdminController extends BaseController {
                     ->nest('childView', 'home.pass', array('data' => $data));
             default :
                 return Redirect::to('/tips/'.'您的请求不合法...');
+        }
+    }
+    /*
+     |-----------------------------------------------------------------------
+     |Insert info of org and course into database
+     |-----------------------------------------------------------------------
+     */
+    public function infoInsert($action) {
+        switch($action) {
+            case 'orginsert':
+                $org = new Organization;
+                $org_type = Input::get('org');
+                switch($org_type) {
+                    case '0':
+                        $org->name = Input::get('school_insert');
+                        $org->parent_node = 0;
+                        break;
+                    case '1' :
+                        $school = Input::get('school_options');
+                        $org->name = Input::get('college_insert');
+                        $org->parent_node = $school;
+                        break;
+                    case '2':
+                        $collge = Input::get('college_options');
+                        $org->name = Input::get('major_insert');
+                        $org->parent_node = $collge;
+                        break;
+                }
+                $success = $org->save();
+                if($success) {
+                    return Redirect::to('/tips/'.'信息已经录入...');
+                }
+                else {
+                    return Redirect::to('/tips/'.'信息录入失败...');
+                }
+                break;
+            case 'courseinsert' :
+                $success = false;
+                DB::transaction(function() use(&$success){
+                    $course = new Course;
+                    $course->name = Input::get('course');
+                    $course->creator = Auth::user()->email;
+                    $success = $course->save();
+                });
+                if($success) {
+                    return Redirect::to('/tips/'.'信息录入成功...');
+                }
+                else {
+                    return Redirect::to('/tips/'.'信息录入失败...');
+                }
+                break;
         }
     }
 }

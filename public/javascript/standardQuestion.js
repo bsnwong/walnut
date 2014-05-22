@@ -13,4 +13,8 @@ $(document).ready(function() {
         }
         $('#time').text(time_limit);
     },60000);
+    $('#c_id').attr('value', $('#course').val());
+    $('#course').change(function() {
+        $('#c_id').attr('value', $(this).val());
+    });
 });
