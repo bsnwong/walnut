@@ -2,7 +2,7 @@
 @parent
 {{ HTML::style('css/chart.css') }}
 @stop
-<div><h3 id="title">个人分析</h3></div>
+<div><h3 id="title">对比分析</h3></div>
 <div id="content">
     {{ Form::label('course', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;科目:') }}
     {{ Form::macro('selectCourse', function() {
@@ -32,5 +32,5 @@
 </div>
 @section('script')
 {{ HTML::script('javascript/highcharts/js/highcharts.js') }}
-{{ HTML::script('javascript/user.js') }}
+{{ HTML::script('javascript/usercompare.js') }}
 @stop

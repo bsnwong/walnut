@@ -25,14 +25,7 @@
             </li>
             <li><a href="/admin/action/orginsert">添加组织信息</a></li>
             <li><a href="/admin/action/courseinsert">添加学科信息</a></li>
-            <li>测试分析
-                <ul>
-                    <li>test</li>
-                </ul>
-            </li>
-            <li>所在区域情况</li>
-            <li></li>
-            <li></li>
+            <li><a class="detail" href="/admin/action/allchart">总体情况</a></li>
         </ul>
     </div>
     <div id="container">

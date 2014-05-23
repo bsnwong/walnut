@@ -14,29 +14,35 @@
 /*
  * Will show the home page if is login, otherwise the login page
  * */
-Route::get('/', function()
-{
-    $user = Session::get('user');
-    if($user) {
-        return View::make('home.user');
+Route::get('/', function() {
+    if(Auth::check()) {
+        if(Auth::user()->type == 1) {
+            return View::make('home.user');
+        }
+        elseif(Auth::user()->type == 0) {
+            return View::make('home.manage');
+        }
     }
     else {
-        return View::make('home.public');
+        return Redirect::to('/tips/'.'您还未登录...');
     }
 });
-Route::get('/home', 'HomeController@showHome');
+Route::get('/home',  function() {
+    if(Auth::check()) {
+        if(Auth::user()->type == 1) {
+            return View::make('home.user');
+        }
+        elseif(Auth::user()->type == 0) {
+            return View::make('home.manage');
+        }
+    }
+    else {
+        return Redirect::to('/tips/'.'您还未登录...');
+    }
+});
 
 Route::get('/about', function() {
-    exit;
-    $users = User::all()->count();
-    $view = View::make('home.about');
-    $view->greeting = 'hi';
-    $view->who = 'everyone';
-    $view->user = $users;
-    $new = new User;
-    $new->name = 'hello';
-    $new->save();
-    return $view;
+    return View::make('home.about');
 });
 /*
  |---------------------------------------------------------------------
@@ -151,7 +157,7 @@ Route::get('/user/action/{action}', function($action) {
     return View::make('home.user')->nest('childView', 'home.'.$action);
 })->before('guest');
 Route::post('/user/action/{action}/{param?}', 'AdminController@denoteQuestion')->before('guest');
-Route::post('/user/{action}', 'HomeController@stastic')->before('guest');
+Route::post('/user/{action}', 'HomeController@stastic');
 /*
  |----------------------------------------------------------------------
  |Route to display the denote questions' status

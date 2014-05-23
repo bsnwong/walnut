@@ -1,0 +1,9 @@
+#about {
+    margin: 0 auto;
+    width: 500px;
+    height: 200px;
+    line-height: 50px;
+    padding: 10px;
+    border: 2px dotted #ED3D1A;
+    border-radius: 10px;
+}

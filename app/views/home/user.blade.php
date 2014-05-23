@@ -28,10 +28,10 @@
             <li>测试分析
                 <ul>
                     <li><a href="/user/action/chart">个人情况</a></li>
-                    <li>所在群体情况</li>
+                    <li><a href="/user/action/allchart">总体情况</a></li>
+                    <li><a href="/user/action/compare">对比</a></li>
                 </ul>
             </li>
-            <li>最近状况</li>
         </ul>
     </div>
     <div id="container">

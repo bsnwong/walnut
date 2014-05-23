@@ -21,16 +21,18 @@ class HomeController extends BaseController {
 	}
 
     public function showHome() {
-        //test whether the user has logged in
-        $user = Session::get('user');
-        if($user) {
-            $view = View::make('home.user');
-            $view->user = $user;
+        if(Auth::check()) {
+            if(Auth::user()->type == 1) {
+                $view = View::make('home.user');
+            }
+            elseif( Auth::user()->type == 0) {
+                $view = View::make('home.manage');
+            }
+            return $view;
         }
         else {
-            $view = View::make('home.public');
+            return Redirect::to('/tips/'.'您还未登录...');
         }
-        return $view;
     }
     /*
      |----------------------------------------------------------------------
@@ -303,6 +305,108 @@ class HomeController extends BaseController {
                         array(
                             'name' => Auth::user()->name,
                             'data' => $score,
+                        ),
+                    )
+                );
+                return json_encode($result);
+            case 'allchart' :
+                $data = Result::select(array(DB::raw('SUM(score) as total'), 'nth'))
+                    ->where('read', '=', 1)
+                    ->where('c_id', '=', Input::get('c_id'))
+                    ->groupBy('nth')
+                    ->get();
+                $count = Result::where('read', '=', 1)
+                    ->where('c_id', '=', Input::get('c_id'))
+                    ->groupBy('nth')
+                    ->distinct('u_email')
+                    ->count();
+                $score = array();
+                foreach($data as $item) {
+                    $score[] = (int)$item->total/$count;
+                }
+                $result = array(
+                    'chart' => array(
+                        'renderTo' => 'chart',
+                        'type' => 'spline'
+                    ),
+                    'title' => array(
+                        'text' => '总体测试情况'
+                    ),
+                    'xAxis' => array(
+                        'title' => array(
+                            'text' => '测试次数'
+                        ),
+                        'tickInterval' => 2
+                    ),
+                    'yAxis' => array(
+                        'title' => array(
+                            'text' => '分数'
+                        ),
+                        'tickInterval' => 2
+                    ),
+                    'series' => array(
+                        array(
+                            'name' => '总体，共'.$count.'人',
+                            'data' => $score,
+                        ),
+                    )
+                );
+                return json_encode($result);
+
+                break;
+            case 'compare' :
+                $data = Result::select(array(DB::raw('SUM(score) as total'), 'nth'))
+                    ->where('u_email', '=', Auth::user()->email)
+                    ->where('read', '=', 1)
+                    ->where('c_id', '=', Input::get('c_id'))
+                    ->groupBy('nth')
+                    ->get();
+                $score = array();
+                foreach($data as $item) {
+                    $score[] = (int)$item->total;
+                }
+                $alldata = Result::select(array(DB::raw('SUM(score) as total'), 'nth'))
+                    ->where('read', '=', 1)
+                    ->where('c_id', '=', Input::get('c_id'))
+                    ->groupBy('nth')
+                    ->get();
+                $allcount = Result::where('read', '=', 1)
+                    ->where('c_id', '=', Input::get('c_id'))
+                    ->groupBy('nth')
+                    ->distinct('u_email')
+                    ->count();
+                $allscore = array();
+                foreach($alldata as $allitem) {
+                    $allscore[] = (int)$allitem->total/$allcount;
+                }
+                $result = array(
+                    'chart' => array(
+                        'renderTo' => 'chart',
+                        'type' => 'spline'
+                    ),
+                    'title' => array(
+                        'text' => '个人测试情况'
+                    ),
+                    'xAxis' => array(
+                        'title' => array(
+                            'text' => '测试次数'
+                        ),
+                        'tickInterval' => 2
+                    ),
+                    'yAxis' => array(
+                        'title' => array(
+                            'text' => '分数'
+                        ),
+                        'tickInterval' => 2
+                    ),
+                    'series' => array(
+                        array(
+                            'name' => Auth::user()->name,
+                            'data' => $score,
+                        ),
+                        array(
+                            'name' => '总体，共'.$allcount.'人',
+                            'data' => $allscore,
                         ),
                     )
                 );

@@ -69,11 +69,12 @@ class AdminController extends BaseController {
      * */
     public function register() {
         $count = User::emailExists(Input::get('email'))->count();
+        $success = false;
         if($count) {
             Walnut::json_encode_end(array('success' => false, 'message' => '邮箱已经被注册...'));
         }
         else {
-            DB::transaction(function() {
+            DB::transaction(function() use(&$success) {
                 $user = new User;
                 $user->name = Input::get('name');
                 $user->sex = Input::get('sexual');
@@ -86,17 +87,15 @@ class AdminController extends BaseController {
                 //create the directory of the uploaded photo
                 $flag = Walnut::imageUpload('one_inch', $user);
                 if($flag === true) {
-                    if($user->save()) {
-                        echo json_encode(array('success' => true, 'message' => '恭喜你，注册成功...'));
-                    }
-                    else {
-                        Walnut::json_encode_end(array('success' => false, 'message' => '很遗憾，注册失败...'));
-                    }
-                }
-                else {
-                    Walnut::json_encode_end(array('success' => false, 'message' => '很遗憾，注册失败...'));
+                    $success = $user->save();
                 }
             });
+            if($success) {
+                return Redirect::to('/tips/'.'恭喜你，注册成功...');
+            }
+            else{
+                return Redirect::to('/tips/'.'很遗憾，注册失败...');
+            }
         }
     }
     /*
@@ -115,10 +114,10 @@ class AdminController extends BaseController {
         $email = Input::get('email');
         $count = User::emailExists($email)->count();
         if($count) {
-            return json_encode(array('success' => false, 'message' => '该邮箱已被注册...'));
+            return Redirect::to('/tips/'.'该邮箱已被注册...');
         }
         else {
-            return json_encode(array('success' => true, 'message' => '邮箱可用...'));
+            return Redirect::to('/tips/'.'邮箱可用...');
         }
     }
     /*
@@ -180,8 +179,9 @@ class AdminController extends BaseController {
      |----------------------------------------------------------------------
      * */
     public function editUserInfo($id) {
+        $success = false;
         if(Auth::check()) {
-            DB::transaction(function() use($id) {
+            DB::transaction(function() use($id, &$success) {
                 $user = array(
                     'id' => $id,
                     'password' => Input::get('password_old')
@@ -198,24 +198,19 @@ class AdminController extends BaseController {
                     //create the directory of the uploaded photo
                     $flag = Walnut::imageUpload('one_inch', $user);
                     if($flag === true) {
-                        if($user->update()) {
-                            echo json_encode(array('success' => false, 'message' => '修改成功...'));
-                        }
-                        else {
-                            echo json_encode(array('success' => false, 'message' => '修改失败...'));
-                        }
+                        $success = $user->update();
                     }
-                    else {
-                        echo json_encode(array('success' => false, 'message' => '修改失败...'));
-                    }
-                }
-                else {
-                    echo json_encode(array('success' => false, 'message' => '旧密码不正确...'));
                 }
             });
+            if($success) {
+                return Redirect::to('/tips/'.'修改成功...');
+            }
+            else {
+                return Redirect::to('/tips/'.'修改失败...');
+            }
         }
         else {
-            echo  json_encode(array('success' => false, 'message' => '您还未登录...'));
+            return Redirect::to('/tips/'.'您还未登录...');
         }
     }
     /*

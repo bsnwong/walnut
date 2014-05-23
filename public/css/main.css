@@ -123,11 +123,16 @@ li {
     border-radius: 10px;
     border: 3px dotted #ED3D1A;
 }
-form select, input {
+select, input {
     border: 1px dotted #ED3D1A;
     background-color: #FFEFDB;
 }
 label {
     color: #666;
     font-weight: bolder;
+}
+#back a{
+    margin-right: 20px;
+    font-weight: 800;
+    color: #ED3D1A;
 }
