@@ -10,29 +10,47 @@
             <div id="logo">{{ Form::image('image/logo.png', 'logo', array('width' => 380, 'style' => 'background:none;border:none')) }}</div>
             <div>
                 <ul class="nav1">
-                    <li class="nav1-li"><a href="/home">主页</a></li>
+                    @if(Auth::check())
+                    @if(Auth::user()->type == 0)
+                    <li class="nav1-li"><a href="/admin/action/allchart">主页</a></li>
+                    @elseif(Auth::user()->type == 1)
+                    <li class="nav1-li"><a href="/user/1/{{ Auth::user()->name }}/{{ Auth::user()->id }}/section">主页</a></li>
+                    @endif
+                    @endif
                     <li class="nav1-li has_child">个人
                         <ul class="nav2 nav">
-                            <li class="nav2-li">成绩查询</li>
-                            <li class="nav2-li">个人信息</li>
+                            @if( Auth::check() )
+                            @if(Auth::user()->type == 0)
+                            <li><a class="detail nav2-li" href="/admin/0/{{ Auth::user()->name }}/{{ Auth::user()->id }}/section/private">查看个人信息</a></li>
+                            <li><a class="detail nav2-li" href="/admin/0/{{ Auth::user()->name }}/{{ Auth::user()->id }}/section/edit">修改个人信息</a></li>
+                            @elseif(Auth::user()->type == 1)
+                            <li><a class="detail nav2-li" href="/user/1/{{ Auth::user()->name }}/{{ Auth::user()->id }}/section/private">查看个人信息</a>
+                            <li><a class="detail nav2-li" href="/user/1/{{ Auth::user()->name }}/{{ Auth::user()->id }}/section/edit">修改个人信息</a></li>
+                            @endif
+                            @endif
                         </ul>
                     </li>
                     <li class="nav1-li has_child">功能
                         @if( Auth::check() )
                         <ul class="nav2 nav">
                             @if( Auth::user()->type == 0)
-                            <li class="nav2-li">管理试题</li>
+                            <li><a class="nav2-li" href="/admin/{{ Auth::user()->id }}/question/insert">试题录入</a></li>
+                            <li><a class="nav2-li" href="/admin/{{ Auth::user()->id }}/question/audit/1">试题审核</a></li>
+                            <li><a class="nav2-li" href="/admin/{{ Auth::user()->id }}/question/edit/1">试题编辑</a></li>
+                            <li><a class="nav2-li" href="/admin/{{ Auth::user()->id }}/question/read">阅卷</a></li>
                             @endif
-                            <li class="nav2-li">选择试题</li>
-                            <li class="nav2-li">测试分析</li>
-                            <li class="nav2-li">生成成绩单</li>
+                            @if( Auth::user()->type == 1)
+                            <li><a class="nav2-li" href="/user/action/denote">贡献试题</a></li>
+                            <li><a class="nav2-li"  href="/user/denote/pass">已经通过</a></li>
+                            <li><a class="nav2-li"  href="/user/denote/wait">待审核</a></li>
+                            <li><a  class="nav2-li"href="/user/action/chart">个人情况</a></li>
+                            @endif
                         </ul>
                         @endif
                     </li>
                     <li class="nav1-li">公告</li>
-                    <li class="nav1-li">关于</li>
+                    <li class="nav1-li"><a href="/about">关于</a></li>
                     @if( Auth::check() )
-<!--                        <div hidde></div>-->
                         <li class="nav1-li"><a href="/logout">退出</a></li>
                     @else
                         <li class="nav1-li has_child"><a href="/login">登入</a>
@@ -47,6 +65,10 @@
         </div>
         <div class="clear"></div>
         <div id="middle">
+            @if(Auth::check())
+            <div class="float_right" id="back"><a href="{{ URL::previous() }}">返回上一页</a></div>
+            @endif
+            <div class="clear"></div>
             @yield('middle')
         </div>
         <div class="clear"></div>

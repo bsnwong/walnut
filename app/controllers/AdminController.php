@@ -69,11 +69,12 @@ class AdminController extends BaseController {
      * */
     public function register() {
         $count = User::emailExists(Input::get('email'))->count();
+        $success = false;
         if($count) {
             Walnut::json_encode_end(array('success' => false, 'message' => '邮箱已经被注册...'));
         }
         else {
-            DB::transaction(function() {
+            DB::transaction(function() use(&$success) {
                 $user = new User;
                 $user->name = Input::get('name');
                 $user->sex = Input::get('sexual');
@@ -86,17 +87,15 @@ class AdminController extends BaseController {
                 //create the directory of the uploaded photo
                 $flag = Walnut::imageUpload('one_inch', $user);
                 if($flag === true) {
-                    if($user->save()) {
-                        echo json_encode(array('success' => true, 'message' => '恭喜你，注册成功...'));
-                    }
-                    else {
-                        Walnut::json_encode_end(array('success' => false, 'message' => '很遗憾，注册失败...'));
-                    }
-                }
-                else {
-                    Walnut::json_encode_end(array('success' => false, 'message' => '很遗憾，注册失败...'));
+                    $success = $user->save();
                 }
             });
+            if($success) {
+                return Redirect::to('/tips/'.'恭喜你，注册成功...');
+            }
+            else{
+                return Redirect::to('/tips/'.'很遗憾，注册失败...');
+            }
         }
     }
     /*
@@ -115,10 +114,10 @@ class AdminController extends BaseController {
         $email = Input::get('email');
         $count = User::emailExists($email)->count();
         if($count) {
-            return json_encode(array('success' => false, 'message' => '该邮箱已被注册...'));
+            return Redirect::to('/tips/'.'该邮箱已被注册...');
         }
         else {
-            return json_encode(array('success' => true, 'message' => '邮箱可用...'));
+            return Redirect::to('/tips/'.'邮箱可用...');
         }
     }
     /*
@@ -180,8 +179,9 @@ class AdminController extends BaseController {
      |----------------------------------------------------------------------
      * */
     public function editUserInfo($id) {
+        $success = false;
         if(Auth::check()) {
-            DB::transaction(function() use($id) {
+            DB::transaction(function() use($id, &$success) {
                 $user = array(
                     'id' => $id,
                     'password' => Input::get('password_old')
@@ -198,24 +198,19 @@ class AdminController extends BaseController {
                     //create the directory of the uploaded photo
                     $flag = Walnut::imageUpload('one_inch', $user);
                     if($flag === true) {
-                        if($user->update()) {
-                            echo json_encode(array('success' => false, 'message' => '修改成功...'));
-                        }
-                        else {
-                            echo json_encode(array('success' => false, 'message' => '修改失败...'));
-                        }
+                        $success = $user->update();
                     }
-                    else {
-                        echo json_encode(array('success' => false, 'message' => '修改失败...'));
-                    }
-                }
-                else {
-                    echo json_encode(array('success' => false, 'message' => '旧密码不正确...'));
                 }
             });
+            if($success) {
+                return Redirect::to('/tips/'.'修改成功...');
+            }
+            else {
+                return Redirect::to('/tips/'.'修改失败...');
+            }
         }
         else {
-            echo  json_encode(array('success' => false, 'message' => '您还未登录...'));
+            return Redirect::to('/tips/'.'您还未登录...');
         }
     }
     /*
@@ -243,13 +238,10 @@ class AdminController extends BaseController {
                             ->count();
                     }
                     elseif($action === 'audit') {
-                        $data = Question::where('author', '=', Auth::user()->email)
-                            ->where('allow', '=', 0)
+                        $data = Question::where('allow', '=', 0)
                             ->forPage($page, $perPage)
                             ->get();
-                        $total = Question::where('author', '=', Auth::user()
-                            ->email)
-                            ->where('allow', '=', 0)
+                        $total = Question::where('allow', '=', 0)
                             ->count();
                     }
                     $page = $total%$perPage ? (int)($total/$perPage+1) : $total/$perPage;
@@ -341,7 +333,14 @@ class AdminController extends BaseController {
                     $data = Question::find($id);
                 }
                 return View::make('home.manage')
-                    ->nest('childView', 'manage.question'.ucfirst($action), array('data' => $data, 'page' => $page ));
+                    ->nest(
+                        'childView',
+                        'manage.question'.ucfirst($action),
+                        array(
+                            'data' => $data,
+                            'page' => $page
+                        )
+                    );
             case 'delete':
                 $params = array('u_email' => Auth::user()->email, 'q_id' => $param);
                 DB::transaction(function() use($params){
@@ -370,9 +369,75 @@ class AdminController extends BaseController {
                     }
                 });
                 break;
-            default :
+            case 'read' :
+                $page = $param;
+                $perPage = 20;
+                $users = User::select(DB::raw('DISTINCT email, id'))
+                    ->where('school', '=', Auth::user()->school)
+                    ->where('college', '=', Auth::user()->college)
+                    ->where('major', '=', Auth::user()->major)
+                    ->get();
+                $results = array();
+                $total = 0;
+                foreach($users as $index => $user) {
+                    $user_id = $user->id;
+                    $result = User::find($user_id)
+                        ->result()
+                        ->where('read', '=', 0)
+                        ->whereNotIn('q_type', array('1', '2', '3', '4'), 'and')
+                        ->get();
+                   $count = User::find($user_id)
+                        ->result()
+                        ->where('read', '=', 0)
+                        ->whereNotIn('q_type', array('1', '2', '3', '4'), 'and')
+                        ->count();
+                    $total += $count;
+                    foreach($result as $k => $v) {
+                        $question = Result::find($v->id)
+                            ->question()
+                            ->first();
+                        $results[$user_id][$v->nth][] = array(
+                            'question' => $question,
+                            'result' => $v
+                        );
+                    }
+                }
+                return View::make('home.manage')
+                    ->nest(
+                        'childView',
+                        'home.read',
+                        array(
+                            'data' => $results,
+                            'total' => $total,
+                            'perpage' => 20
+                        )
+                    );
+                break;
+            case 'postScore':
+                $score = Input::get('score');
+                $result2 = Input::get('result');
+                DB::transaction(function() use($score, $result2){
+                    foreach($score as $index => $value) {
+                        if($value >= 0) {
+                            $r = Result::find($result2[$index]);
+                            $r->score = $value;
+                            $r->read = 1;
+                            $r->update();
+                        }
+                    }
+                });
+                break;
+            default:
                 return Redirect::to('/tips/'.'您的请求不合法...');
         }
+    }
+    /*
+     |----------------------------------------------------------------------
+     |Read the result and post the score
+     |----------------------------------------------------------------------
+     * */
+    public static function postScore() {
+
     }
     /*
      |-----------------------------------------------------------------------
@@ -388,11 +453,17 @@ class AdminController extends BaseController {
             $q_id = $param;
             $question = Question::find($q_id);
         }
-        $question->code = md5(Auth::user()->email.time());
-        $question->course_code = Input::get('course');
+        $question->c_id = Input::get('course');
         $question->type = Input::get('question_type');
         $question->question = Input::get('question');
-        $question->answer_num = Input::get('amount') ? Input::get('amount') : Input::get('ms_amount') ? Input::get('ms_amount') : 0;
+        if(Input::get('question_type') == '1') {
+            $question->answer_num = Input::get('amount');
+            $question->select_options = Input::get('select_options');
+        }
+        else {
+            $question->answer_num = Input::get('ms_amount');
+            $question->select_options = Input::get('m_select_options');
+        }
         $question->analysis = Input::get('answer_analysis');
         $question->score = Input::get('score');
         $question->level = Input::get('question_level');
@@ -407,8 +478,13 @@ class AdminController extends BaseController {
             case '2' ://multiple selection question
                 $question->answer4 = implode('|', Input::get('selected_answer'));
                 break;
-            case '3' :
-                $question->answer5 = Input::get('blank_type');
+            case '3' ://blank
+                $answer5 = explode('|', Input::get('blank_type'));
+                $new_answer5 = array();
+                foreach($answer5 as $item) {
+                    $new_answer5[] = trim($item);
+                }
+                $question->answer5 = implode('|', $new_answer5);
                 break;
             case '4' ://judge question
                 $question->answer3 = Input::get('judge_type');
@@ -449,11 +525,16 @@ class AdminController extends BaseController {
             $q_id = $param;
             $question = Question::find($q_id);
         }
-        $question->code = md5(Auth::user()->email.time());
-        $question->course_code = Input::get('course');
+        $question->c_id = Input::get('course');
         $question->type = Input::get('question_type');
         $question->question = Input::get('question');
-        $question->answer_num = Input::get('amount') ? Input::get('amount') : Input::get('ms_amount') ? Input::get('ms_amount') : 0;
+        if(Input::get('question_type') == '1') {
+            $question->answer_num = Input::get('amount');
+        }
+        else {
+            $question->answer_num = Input::get('ms_amount');
+        }
+        $question->select_options = Input::get('select_options');
         $question->analysis = Input::get('answer_analysis');
         $question->score = Input::get('score');
         $question->level = Input::get('question_level');
@@ -516,9 +597,60 @@ class AdminController extends BaseController {
                         ->get();
                 }
                 return View::make('home.user')
-                    ->nest('childView', 'home.pass', array('data' => $data));
+                    ->nest('childView', 'home.'.$status, array('data' => $data));
             default :
                 return Redirect::to('/tips/'.'您的请求不合法...');
+        }
+    }
+    /*
+     |-----------------------------------------------------------------------
+     |Insert info of org and course into database
+     |-----------------------------------------------------------------------
+     */
+    public function infoInsert($action) {
+        switch($action) {
+            case 'orginsert':
+                $org = new Organization;
+                $org_type = Input::get('org');
+                switch($org_type) {
+                    case '0':
+                        $org->name = Input::get('school_insert');
+                        $org->parent_node = 0;
+                        break;
+                    case '1' :
+                        $school = Input::get('school_options');
+                        $org->name = Input::get('college_insert');
+                        $org->parent_node = $school;
+                        break;
+                    case '2':
+                        $collge = Input::get('college_options');
+                        $org->name = Input::get('major_insert');
+                        $org->parent_node = $collge;
+                        break;
+                }
+                $success = $org->save();
+                if($success) {
+                    return Redirect::to('/tips/'.'信息已经录入...');
+                }
+                else {
+                    return Redirect::to('/tips/'.'信息录入失败...');
+                }
+                break;
+            case 'courseinsert' :
+                $success = false;
+                DB::transaction(function() use(&$success){
+                    $course = new Course;
+                    $course->name = Input::get('course');
+                    $course->creator = Auth::user()->email;
+                    $success = $course->save();
+                });
+                if($success) {
+                    return Redirect::to('/tips/'.'信息录入成功...');
+                }
+                else {
+                    return Redirect::to('/tips/'.'信息录入失败...');
+                }
+                break;
         }
     }
 }

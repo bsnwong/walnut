@@ -1,0 +1,11 @@
+#content {
+    margin: 0 auto;
+    width: 300px;
+    min-height: 100px;
+    border-radius: 10px;
+    border: 2px dotted #ED3D1A;
+}
+#course_insert {
+    height: 100px;
+    line-height: 100px;
+}

@@ -2,7 +2,7 @@
 @parent
 {{ HTML::style('css/questionEdit.css') }}
 @stop
-<div><h3 id="title">已经通过审核的试题</h3></div>
+<div><h3 id="title">待审核的试题</h3></div>
 <div id="content">
     <table id="question_modify">
         <tr>

@@ -1,5 +1,5 @@
 /**
- * Created by bsn on 14-5-8.
+ * Created by bsn on 14-5-22.
  */
 $(function () {
     var json;
@@ -10,7 +10,7 @@ $(function () {
     $('#course').change(function() {
         $.ajax({
             type: 'POST',
-            url: '/user/chart',
+            url: '/user/allchart',
             data: {'c_id':$('#course').val()},
             success: function(msg) {
                 msg = JSON.parse(msg);

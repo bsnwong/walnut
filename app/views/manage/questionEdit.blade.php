@@ -46,15 +46,18 @@
                         echo '多选题';
                         break;
                     case 3:
-                        echo '判断题';
+                        echo '填空题';
                         break;
                     case 4:
-                        echo '简答题';
+                        echo '判断题';
                         break;
                     case 5:
-                        echo '计算题';
+                        echo '简答题';
                         break;
                     case 6:
+                        echo '计算题';
+                        break;
+                    case 7:
                         echo '综合题';
                         break;
                     default:
@@ -64,25 +67,29 @@
             </td>
             <td>{{ $item->question }}</td>
             <td>
-                @if($item->type == '1')
-                {{ $item->answer2 }}
-                @endif
-                @if($item->type == '2')
-                {{ $item->answer4 }}
-                @endif
-                @if($item->type == '3')
-                @if($item->answer3)
-                对
-                @else
-                错
-                @endif
-                @endif
-                @if($item->type == '4')
-                {{ $item->answer3 }}
-                @endif
-                @if($item->type == '0')
-                {{ $item->answer }}
-                @endif
+                <?php
+                    switch($item->type) {
+                        case '1':
+                            echo $item->answer2;
+                            break;
+                        case '2':
+                            echo $item->answer4;
+                            break;
+                        case '3':
+                            echo $item->answer5;
+                            break;
+                        case '4':
+                            if($item->answer3) {
+                                echo '对';
+                            }
+                            else {
+                                echo '错';
+                            }
+                            break;
+                        default:
+                            echo $item->answer;
+                    }
+                ?>
             </td>
             <td>{{ $item->analysis }}</td>
             <td>{{ $item->created_at }}</td>

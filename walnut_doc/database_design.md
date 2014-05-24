@@ -181,25 +181,11 @@
         <td></td>
     </tr>
     <tr>
-        <td>code</td>
-        <td>32</td>
-        <td>char</td>
-        <td>试题编号</td>
-        <td>唯一</td>
-    </tr>
-    <tr>
         <td>course_code</td>
         <td></td>
         <td>enum</td>
         <td>科目类型</td>
         <td>外键(Course:code)</td>
-    </tr>
-    <tr>
-        <td>code</td>
-        <td></td>
-        <td>bigint(UNSIGNED)</td>
-        <td>试题代号</td>
-        <td></td>
     </tr>
     <tr>
         <td>question</td>
@@ -241,6 +227,13 @@
         <td>50</td>
         <td>varchar</td>
         <td>多选题答案</td>
+        <td>以‘|’号作为分隔符</td>
+    </tr>
+    <tr>
+        <td>select_options</td>
+        <td></td>
+        <td>text</td>
+        <td>选项</td>
         <td>以‘|’号作为分隔符</td>
     </tr>
     <tr>
@@ -399,11 +392,25 @@
         <td></td>
     </tr>
     <tr>
-        <td>question_code</td>
+        <td>q_id</td>
         <td></td>
         <td>char</td>
-        <td>试题编号</td>
-        <td>外键(Question:code)</td>
+        <td>试题Id</td>
+        <td>外键(Question:id)</td>
+    </tr>
+    <tr>
+        <td>q_type</td>
+        <td></td>
+        <td>char</td>
+        <td>试题类型</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>answer</td>
+        <td></td>
+        <td>text</td>
+        <td>答案</td>
+        <td></td>
     </tr>
     <tr>
         <td>u_email</td>
@@ -411,6 +418,27 @@
         <td>varchar</td>
         <td>测试者email</td>
         <td>外键(User:email)</td>
+    </tr>
+    <tr>
+        <td>nth</td>
+        <td></td>
+        <td>bigint</td>
+        <td>测试次数</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>score</td>
+        <td></td>
+        <td>tinyint</td>
+        <td>得分</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>read</td>
+        <td></td>
+        <td>enum</td>
+        <td>是否已经阅卷（0：否，1：是）</td>
+        <td></td>
     </tr>
     <tr>
         <td>created_at</td>
@@ -449,11 +477,11 @@
         <td></td>
     </tr>
     <tr>
-        <td>question_code</td>
+        <td>q_id</td>
         <td></td>
         <td>char</td>
-        <td>试题编号</td>
-        <td>外键(Question:code)</td>
+        <td>试题Id</td>
+        <td>外键(Question:id)</td>
     </tr>
     <tr>
         <td>content</td>

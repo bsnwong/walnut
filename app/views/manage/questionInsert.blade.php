@@ -10,11 +10,11 @@
         {{ Form::label('course', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;科目:') }}
         {{ Form::macro('selectCourse', function() {
         $course = DB::table('Course')
-        ->select('code', 'name')
+        ->select('id', 'name')
         ->get();
         $course_item = array();
         foreach($course as $item) {
-        $course_item[$item->code] = $item->name;
+        $course_item[$item->id] = $item->name;
         }
         return Form::select('course', $course_item);
         }
@@ -33,19 +33,20 @@
         {{ Form::label('qanda', '简答题') }}
         {{ Form::radio('calculate', 6, null, array('class' => 'input_default question_type', 'name' => 'question_type')) }}
         {{ Form::label('calculate', '计算题') }}
-        {{ Form::radio('comprehensive', 6, null, array('class' => 'input_default question_type', 'name' => 'question_type')) }}
+        {{ Form::radio('comprehensive', 7, null, array('class' => 'input_default question_type', 'name' => 'question_type')) }}
         {{ Form::label('comprehensive', '综合题') }}
         {{ Form::radio('other', 0, null, array('class' => 'input_default question_type', 'name' => 'question_type')) }}
         {{ Form::label('other', '其他') }}<br/><strong class="tips" id="type_tip"></strong><br/><br/>
         {{ Form::label('question', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题目') }}<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Form::textarea('question', null, array('placeholder' => '请输入题目...')) }}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Form::textarea('question', null, array('placeholder' => '请输入题目，如果是填空题，请在需要填空的地方用‘@’符号作为替代...')) }}
         <div>
             {{--Show the answer type base on the question type--}}
             {{--answer for type 1--}}
             <div id="answer_type1">
                 {{ Form::label('ss_type', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单选题') }}<br/>
                 {{ Form::label('amount', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;选项数量')}}<br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Form::selectRange('amount', '1', '26')}}<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Form::selectRange('amount', '0', '26')}}<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Form::textarea('select_options', null, array('placeholder' => '请输入与选项数量对应的选项，以‘|’隔开...'))}}<br/>
                 {{ Form::label('answer1', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单选答案')}}<br/>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Form::selectRange('answer1', 'A', 'Z', array('id' => 'selected')) }}<br/>
             </div>
@@ -53,7 +54,8 @@
             <div id="answer_type2" style="display: none">
                 {{ Form::label('ms_type', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;多选题') }}<br/>
                 {{ Form::label('ms_amount', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;选项数量')}}<br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Form::selectRange('ms_amount', '1', '26')}}<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Form::selectRange('ms_amount', '0', '26')}}<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Form::textarea('m_select_options', null, array('placeholder' => '请输入与选项数量对应的选项，以‘|’隔开...'))}}<br/>
                 {{ Form::label('ms_option', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;选项')}}<br/>
                 <div id="ms_type"></div>
             </div>
