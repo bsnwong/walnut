@@ -1,4 +1,5 @@
-e Illuminate\Database\Migrations\Migration;
+<?php
+use Illuminate\Database\Migrations\Migration;
 class CreateOrganizationTable extends Migration {
 	/**
 	 * Run the migrations.
