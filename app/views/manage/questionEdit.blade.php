@@ -18,6 +18,7 @@
         {{ Form::submit('搜索', array('id' => 'submit', 'class' => 'input_default submit')) }}
         {{ Form::close() }}
     </div>
+    <div class="clear"></div>
     <table id="question_modify">
         <tr>
             <td>试题Id</td>

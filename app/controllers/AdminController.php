@@ -114,10 +114,10 @@ class AdminController extends BaseController {
         $email = Input::get('email');
         $count = User::emailExists($email)->count();
         if($count) {
-            return Redirect::to('/tips/'.'该邮箱已被注册...');
+            return json_encode(array('success' => false, 'message' =>'该邮箱已被注册...' ));
         }
         else {
-            return Redirect::to('/tips/'.'邮箱可用...');
+            return json_encode(array('success' => true, 'message' =>'邮箱可用...' ));
         }
     }
     /*
@@ -416,17 +416,23 @@ class AdminController extends BaseController {
             case 'postScore':
                 $score = Input::get('score');
                 $result2 = Input::get('result');
-                DB::transaction(function() use($score, $result2){
+                $success = false;
+                DB::transaction(function() use($score, $result2, &$success){
                     foreach($score as $index => $value) {
                         if($value >= 0) {
                             $r = Result::find($result2[$index]);
                             $r->score = $value;
                             $r->read = 1;
-                            $r->update();
+                            $success = $r->update();
                         }
                     }
                 });
-                break;
+                if($success) {
+                    return Redirect::to('/tips/'.'评分成功...');
+                }
+                else {
+                    return Redirect::to('/tips/'.'评分失败...');
+                }
             default:
                 return Redirect::to('/tips/'.'您的请求不合法...');
         }

@@ -295,7 +295,7 @@ class HomeController extends BaseController {
                         'title' => array(
                             'text' => '测试次数'
                         ),
-                        'tickInterval' => 2
+                        'tickInterval' => 1
                     ),
                     'yAxis' => array(
                         'title' => array(
@@ -338,7 +338,7 @@ class HomeController extends BaseController {
                         'title' => array(
                             'text' => '测试次数'
                         ),
-                        'tickInterval' => 2
+                        'tickInterval' => 1
                     ),
                     'yAxis' => array(
                         'title' => array(
@@ -393,7 +393,7 @@ class HomeController extends BaseController {
                         'title' => array(
                             'text' => '测试次数'
                         ),
-                        'tickInterval' => 2
+                        'tickInterval' => 1
                     ),
                     'yAxis' => array(
                         'title' => array(

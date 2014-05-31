@@ -72,14 +72,14 @@
                 {{ $item->answer4 }}
                 @endif
                 @if($item->type == '3')
+                    {{ $item->answer5 }}
+                @endif
+                @if($item->type == '4')
                     @if($item->answer3)
                     对
                     @else
                     错
                     @endif
-                @endif
-                @if($item->type == '4')
-                {{ $item->answer3 }}
                 @endif
                 @if($item->type == '0')
                 {{ $item->answer }}
